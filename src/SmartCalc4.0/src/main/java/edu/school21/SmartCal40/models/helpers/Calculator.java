@@ -1,21 +1,17 @@
-package edu.school21.models.helpers;
+package edu.school21.SmartCal40.models.helpers;
 
 import java.util.Optional;
-import javafx.util.Pair;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 
+import edu.school21.SmartCal40.enums.BinaryOperationType;
+import edu.school21.SmartCal40.enums.UnaryOperationType;
+import javafx.util.Pair;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Stack;
 
-import static edu.school21.models.helpers.OperationsHelper.isBinaryOperation;
 import static java.lang.Math.*;
 
-@Component
-@AllArgsConstructor
 public class Calculator {
-
   public static double calculate(Queue<Pair<String, Double>> polishNotation) {
     Stack<Double> intermediateResult = new Stack<>();
     while (!polishNotation.isEmpty()) {
@@ -25,7 +21,7 @@ public class Calculator {
       final double value = result.getValue();
       if (Objects.equals(operation, "num")) {
         intermediateResult.push(value);
-      } else if (isBinaryOperation(operation)) {
+      } else if (BinaryOperationType.isBinaryOperation(operation)) {
         executionBinaryOperation(intermediateResult, operation);
       } else {
         executionUnaryOperation(intermediateResult, operation);
@@ -40,19 +36,19 @@ public class Calculator {
     double result = 0;
     final double value1 = getValueFromStack(intermediateResult);
     final double value2 = getValueFromStack(intermediateResult);
-    if (Objects.equals(operation, "*")) {
+    if (Objects.equals(operation, BinaryOperationType.MULTIPLICATION.getOperation())) {
       result = value2 * value1;
-    } else if (Objects.equals(operation, "+")) {
+    } else if (Objects.equals(operation, BinaryOperationType.ADDITION.getOperation())) {
       result = value2 + value1;
-    } else if (Objects.equals(operation, "-")) {
+    } else if (Objects.equals(operation, BinaryOperationType.SUBTRACTION.getOperation())) {
       result = value2 - value1;
-    } else if (Objects.equals(operation, "/")) {
+    } else if (Objects.equals(operation, BinaryOperationType.DIVISION.getOperation())) {
       checkDivision(value1);
       result = value2 / value1;
-    } else if (Objects.equals(operation, "mod")) {
+    } else if (Objects.equals(operation, BinaryOperationType.REMAINDER_OF_DIVISION.getOperation())) {
       checkDivision(value1);
       result = value2 % value1;
-    } else if (Objects.equals(operation, "^")) {
+    } else if (Objects.equals(operation, BinaryOperationType.DEGREE.getOperation())) {
       checkZeroPow(value1, value2);
       result = Math.pow(value2, value1);
     }
@@ -63,28 +59,28 @@ public class Calculator {
       final String operation) {
     double result = 0;
     double value = getValueFromStack(intermediateResult);
-    if (Objects.equals(operation, "~")) {
+    if (Objects.equals(operation, UnaryOperationType.TILDE.getOperation())) {
       result = -1 * value;
-    } else if (Objects.equals(operation, "plus")) {
+    } else if (Objects.equals(operation, UnaryOperationType.PLUS.getOperation())) {
       result = value;
-    } else if (Objects.equals(operation, "sin")) {
+    } else if (Objects.equals(operation, UnaryOperationType.SIN.getOperation())) {
       result = sin(value);
-    } else if (Objects.equals(operation, "cos")) {
+    } else if (Objects.equals(operation, UnaryOperationType.COS.getOperation())) {
       result = cos(value);
-    } else if (Objects.equals(operation, "tan")) {
+    } else if (Objects.equals(operation, UnaryOperationType.TAN.getOperation())) {
       result = tan(value);
-    } else if (Objects.equals(operation, "sqrt")) {
+    } else if (Objects.equals(operation, UnaryOperationType.SQRT.getOperation())) {
       checkSqrt(value);
       result = sqrt(value);
-    } else if (Objects.equals(operation, "ln")) {
+    } else if (Objects.equals(operation, UnaryOperationType.LN.getOperation())) {
       result = log(value);
-    } else if (Objects.equals(operation, "log")) {
+    } else if (Objects.equals(operation, UnaryOperationType.LOG.getOperation())) {
       result = log10(value);
-    } else if (Objects.equals(operation, "atan")) {
+    } else if (Objects.equals(operation, UnaryOperationType.ATAN.getOperation())) {
       result = atan(value);
-    } else if (Objects.equals(operation, "acos")) {
+    } else if (Objects.equals(operation, UnaryOperationType.ACOS.getOperation())) {
       result = acos(value);
-    } else if (Objects.equals(operation, "asin")) {
+    } else if (Objects.equals(operation, UnaryOperationType.ASIN.getOperation())) {
       result = asin(value);
     }
     intermediateResult.push(result);

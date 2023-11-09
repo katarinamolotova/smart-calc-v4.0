@@ -1,9 +1,9 @@
-package edu.school21.models;
+package edu.school21.SmartCal40.models;
 
-import edu.school21.models.helpers.Calculator;
-import edu.school21.models.helpers.DataCooker;
-import edu.school21.models.helpers.Parser;
-import edu.school21.models.helpers.Validator;
+import edu.school21.SmartCal40.models.helpers.Calculator;
+import edu.school21.SmartCal40.models.helpers.DataCooker;
+import edu.school21.SmartCal40.models.helpers.Parser;
+import edu.school21.SmartCal40.models.helpers.Validator;
 import javafx.util.Pair;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import java.util.Queue;
 public class BasicCalcModel {
 
   static final int AROUND_VAR = 7;
-  Parser parser;
+  final Parser parser;
 
   public double getResult(final String inputString, final double value) {
     Validator.validateData(inputString);

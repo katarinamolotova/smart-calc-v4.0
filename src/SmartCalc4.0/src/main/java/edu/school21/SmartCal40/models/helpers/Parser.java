@@ -1,15 +1,17 @@
-package edu.school21.models.helpers;
+package edu.school21.SmartCal40.models.helpers;
 
+import edu.school21.SmartCal40.enums.BinaryOperationType;
+import edu.school21.SmartCal40.enums.UnaryOperationType;
 import javafx.util.Pair;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.*;
-
-import static edu.school21.models.helpers.OperationsHelper.isBinaryOperation;
-import static edu.school21.models.helpers.OperationsHelper.isUnaryOperation;
+import java.util.LinkedList;
+import java.util.Objects;
+import java.util.Queue;
+import java.util.Stack;
 
 @Component
 @AllArgsConstructor
@@ -17,6 +19,10 @@ public class Parser {
 
   private final Queue<Pair<String, Double>> polishNotation = new LinkedList<>();
   private boolean isUnary;
+
+  public Parser() {
+    this.isUnary = true;
+  }
 
   public Queue<Pair<String, Double>> doParsing(String str) {
     Stack<String> operations = new Stack<>();
@@ -59,7 +65,10 @@ public class Parser {
     if (Objects.equals(op, ")")) {
       getValueInBrackets(operations);
       isUnary = false;
-    } else if (isBinaryOperation(op) || isUnaryOperation(op) || Objects.equals(op, "(")) {
+    } else if (BinaryOperationType.isBinaryOperation(op)
+               || UnaryOperationType.isUnaryOperation(op)
+               || Objects.equals(op, "(")) {
+
       boolean flagPrevPow = true;
 
       if (Objects.equals(op, "^") && !operations.isEmpty()) {
@@ -71,7 +80,7 @@ public class Parser {
       }
 
       operations.push(op);
-      if (isUnaryOperation(op)) {
+      if (UnaryOperationType.isUnaryOperation(op)) {
         operations.add("(");
       }
       isUnary = true;

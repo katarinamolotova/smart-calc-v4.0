@@ -1,14 +1,9 @@
-package edu.school21.models.helpers;
-
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+package edu.school21.SmartCal40.models.helpers;
 
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Component
-@AllArgsConstructor
 public class DataCooker {
 
   private static final String REGEX = "[-+]?(?:\\d+(?:\\.\\d*)?|\\.\\d+)(?:[eE][-+]?\\d+)";

@@ -1,4 +1,4 @@
-package edu.school21.enums;
+package edu.school21.SmartCal40.enums;
 
 public enum TermType {
     MONTH("Месяцев"),

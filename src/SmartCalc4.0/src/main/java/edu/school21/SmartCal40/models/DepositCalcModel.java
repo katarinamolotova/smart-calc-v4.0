@@ -1,7 +1,7 @@
-package edu.school21.models;
+package edu.school21.SmartCal40.models;
 
-import edu.school21.enums.PeriodType;
-import edu.school21.enums.TermType;
+import edu.school21.SmartCal40.enums.PeriodType;
+import edu.school21.SmartCal40.enums.TermType;
 import javafx.util.Pair;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,6 +20,17 @@ public class DepositCalcModel {
   private static final Integer DAYS_OF_YEAR = 365;
   private static final Double MAX_PERCENT = 100.;
   private static final Double SCALE = 100.;
+
+  public DepositCalcModel() {
+    this.result = 0;
+    this.intermediateSum = 0;
+    this.tempPercent = 0;
+    this.add = 0;
+    this.sum = 0;
+    this.sub = 0;
+    this.countPay = 0;
+    this.countCap = 0;
+  }
 
   private double result;
   private double intermediateSum;

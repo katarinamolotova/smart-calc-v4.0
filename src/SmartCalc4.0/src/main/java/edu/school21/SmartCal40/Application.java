@@ -1,4 +1,4 @@
-package edu.school21;
+package edu.school21.SmartCal40;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

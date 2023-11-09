@@ -1,10 +1,5 @@
-package edu.school21.models.helpers;
+package edu.school21.SmartCal40.models.helpers;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
-
-@AllArgsConstructor
-@Component
 public class Validator {
 
   public static void validateData(final String rawData) {

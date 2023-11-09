@@ -1,7 +1,7 @@
-package edu.school21.models;
+package edu.school21.SmartCal40.models;
 
-import edu.school21.enums.CreditType;
-import edu.school21.enums.TermType;
+import edu.school21.SmartCal40.enums.CreditType;
+import edu.school21.SmartCal40.enums.TermType;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,10 +14,16 @@ public class CreditCalcModel {
   private static final Double MAX_PERCENT = 100.;
   private static final Double SCALE = 100.;
   private static final Integer MONTHS_OF_YEAR = 12;
+  private double overpay;
+  private double totalPayment;
 
   private ArrayList<Double> everyMothPay;
-  private double totalPayment;
-  private double overpay;
+
+  public CreditCalcModel() {
+    this.overpay = 0;
+    this.totalPayment = 0;
+  }
+
 
   public void calculate(
       final CreditType type,
