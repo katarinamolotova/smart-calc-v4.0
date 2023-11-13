@@ -1,0 +1,10 @@
+SELECT import_db('peers', ',');
+SELECT import_db('friends', ',');
+SELECT import_db('recommendations', ',');
+SELECT import_db('tasks', ',');
+SELECT import_db('time_tracking', ',');
+SELECT import_db('checks', ',');
+SELECT import_db('p2p', ',');
+SELECT import_db('transferred_points', ',');
+SELECT import_db('verter', ',');
+SELECT import_db('xp', ',');
