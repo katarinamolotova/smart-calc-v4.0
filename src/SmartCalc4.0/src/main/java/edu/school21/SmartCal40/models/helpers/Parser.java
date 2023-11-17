@@ -26,6 +26,7 @@ public class Parser {
   }
 
   public Queue<Pair<String, Double>> doParsing(String str) {
+    polishNotation.clear();
     Stack<String> operations = new Stack<>();
     for (int i = 0; i < str.length(); i++) {
       String strByPos = str.substring(i);
