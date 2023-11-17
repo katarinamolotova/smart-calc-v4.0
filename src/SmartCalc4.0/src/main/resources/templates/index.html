@@ -3,61 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Calculator</title>
+    <script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
 </head>
 <body>
 
 <div>
-    <form>
+    <form action="" method="post">
         <div>
-            <input type="text">
+            <label>
+                <input id="expression" name="expression" readonly type="text">
+            </label>
         </div>
 
         <div>
-            <button>(</button>
-            <button>)</button>
-            <button>e</button>
-            <button>AC</button>
-            <button>DEL</button>
-            <button>*</button>
-            <button>/</button>
+            <button onclick="drawElement('(')">(</button>
+            <button onclick="drawElement(')')">)</button>
+            <button onclick="drawElement('e')">e</button>
+            <button onclick="deleteElement(false)">AC</button>
+            <button onclick="deleteElement(true)">DEL</button>
+            <button onclick="drawElement('*')">*</button>
+            <button onclick="drawElement('/')">/</button>
         </div>
 
         <div>
-            <button>cos</button>
-            <button>acos</button>
-            <button>x</button>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button>-</button>
+            <button onclick="drawElement('cos(')">cos</button>
+            <button onclick="drawElement('acos(')">acos</button>
+            <button onclick="drawElement('x')">x</button>
+            <button onclick="drawElement('7')">7</button>
+            <button onclick="drawElement('8')">8</button>
+            <button onclick="drawElement('9')">9</button>
+            <button onclick="drawElement('-')">-</button>
         </div>
 
         <div>
-            <button>sin</button>
-            <button>asin</button>
-            <button>^</button>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button>+</button>
+            <button onclick="drawElement('sin(')">sin</button>
+            <button onclick="drawElement('asin(')">asin</button>
+            <button onclick="drawElement('^')">^</button>
+            <button onclick="drawElement('4')">4</button>
+            <button onclick="drawElement('5')">5</button>
+            <button onclick="drawElement('6')">6</button>
+            <button onclick="drawElement('+')">+</button>
         </div>
 
         <div>
-            <button>tan</button>
-            <button>atan</button>
-            <button>mod</button>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
+            <button onclick="drawElement('tan(')">tan</button>
+            <button onclick="drawElement('atan(')">atan</button>
+            <button onclick="drawElement('mod(')">mod</button>
+            <button onclick="drawElement('1')">1</button>
+            <button onclick="drawElement('2')">2</button>
+            <button onclick="drawElement('3')">3</button>
             <button type="submit">=</button>
         </div>
 
         <div>
-            <button>ln</button>
-            <button>log</button>
-            <button>sqrt</button>
-            <button>0</button>
-            <button>.</button>
+            <button onclick="drawElement('ln(')">ln</button>
+            <button onclick="drawElement('log(')">log</button>
+            <button onclick="drawElement('sqrt(')">sqrt</button>
+            <button onclick="drawElement('0')">0</button>
+            <button onclick="drawElement('.')">.</button>
         </div>
     </form>
 </div>
