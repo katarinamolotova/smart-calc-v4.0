@@ -30,36 +30,36 @@ services:
       service-db:
         condition: service_healthy
 
-  service-backend:
-    image: backend_info
-    container_name: S21BackEnd
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      service-flyway:
-        condition: service_completed_successfully
-    env_file:
-      - "./config_backend.env"
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./dist/logs:/app/logs
-      - ./dist/import:/app/import
-      - ./dist/export:/app/export
-    restart: unless-stopped
+#  service-backend:
+#    image: backend_info
+#    container_name: S21BackEnd
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    depends_on:
+#      service-flyway:
+#        condition: service_completed_successfully
+#    env_file:
+#      - "./config_backend.env"
+#    ports:
+#      - "8000:8000"
+#    volumes:
+#      - ./dist/logs:/app/logs
+#      - ./dist/import:/app/import
+#      - ./dist/export:/app/export
+#    restart: unless-stopped
 
-  service-nginx:
-    image: nginx
-    container_name: S21Nginx
-    restart: always
-    depends_on:
-      service-backend:
-        condition: service_started
-    ports:
-      - "80:80"
-    volumes:
-      - ./dist/nginx:/etc/nginx/conf.d
+#  service-nginx:
+#    image: nginx
+#    container_name: S21Nginx
+#    restart: always
+#    depends_on:
+#      service-backend:
+#        condition: service_started
+#    ports:
+#      - "80:80"
+#    volumes:
+#      - ./dist/nginx:/etc/nginx/conf.d
 
 #  service-pgadmin:
 #    image: dpage/pgadmin4:7

@@ -1,7 +1,7 @@
 package edu.school21.SmartCal40.controllers;
 
+import edu.school21.SmartCal40.entities.HistoryEntity;
 import edu.school21.SmartCal40.models.BasicCalcModel;
-import edu.school21.SmartCal40.repositories.HistoryRepository;
 import edu.school21.SmartCal40.services.HistoryService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainController {
     final BasicCalcModel calcModel;
     final HistoryService service;
-//    final HistoryRepository repository; // какого то уя
 
-
-    @GetMapping("/") // потом поправить
+    @GetMapping("/")
     public String getMainPage() {
         return "index";
     }
@@ -29,7 +27,7 @@ public class MainController {
             @RequestParam("value") final String value,
             final Model model
     ) {
-//        service.save
+        service.save(expression);
         String result = calcModel.getResult(expression, value);
         model.addAttribute("value", value);
         model.addAttribute("result", result);
