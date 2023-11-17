@@ -1,5 +1,6 @@
 package edu.school21.SmartCal40.models;
 
+import edu.school21.SmartCal40.enums.ErrorMessage;
 import edu.school21.SmartCal40.models.helpers.Calculator;
 import edu.school21.SmartCal40.models.helpers.DataCooker;
 import edu.school21.SmartCal40.models.helpers.Parser;
@@ -20,11 +21,16 @@ public class BasicCalcModel {
   static final int AROUND_VAR = 7;
   final Parser parser;
 
-  public double getResult(final String inputString, final double value) {
-    Validator.validateData(inputString);
-    String result = DataCooker.DataCook(inputString, value);
-    Queue<Pair<String, Double>> pairs = parser.doParsing(result);
-    return round(Calculator.calculate(pairs));
+  public String getResult(final String inputString, final String valueRaw) {
+    try {
+      double value = Double.parseDouble(!valueRaw.isEmpty() ? valueRaw : "0");
+      Validator.validateData(inputString);
+      String result = DataCooker.DataCook(inputString, value);
+      Queue<Pair<String, Double>> pairs = parser.doParsing(result);
+      return String.valueOf(round(Calculator.calculate(pairs)));
+    } catch (NumberFormatException e) {
+      return ErrorMessage.ERROR_ARGUMENTS.getName();
+    }
   }
 
   private static double round(double value) {
