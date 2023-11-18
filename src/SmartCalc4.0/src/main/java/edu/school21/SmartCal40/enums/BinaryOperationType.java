@@ -23,6 +23,15 @@ public enum BinaryOperationType {
         return false;
     }
 
+    public static BinaryOperationType fromString(String text) {
+        for (BinaryOperationType b : BinaryOperationType.values()) {
+            if (b.operation.equalsIgnoreCase(text)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
     public String getOperation() {
         return operation;
     }

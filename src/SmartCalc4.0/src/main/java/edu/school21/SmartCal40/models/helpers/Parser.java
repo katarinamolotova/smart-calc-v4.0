@@ -1,6 +1,7 @@
 package edu.school21.SmartCal40.models.helpers;
 
 import edu.school21.SmartCal40.enums.BinaryOperationType;
+import edu.school21.SmartCal40.enums.ErrorMessage;
 import edu.school21.SmartCal40.enums.UnaryOperationType;
 import javafx.util.Pair;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class Parser {
   }
 
   public Queue<Pair<String, Double>> doParsing(String str) {
+    polishNotation.clear();
     Stack<String> operations = new Stack<>();
     for (int i = 0; i < str.length(); i++) {
       String strByPos = str.substring(i);
@@ -50,7 +52,7 @@ public class Parser {
       this.polishNotation.add(new Pair<>("num", number.doubleValue()));
       isUnary = false;
     } catch (ParseException e) {
-      throw new RuntimeException("Error: Something wrong");
+      throw new RuntimeException(ErrorMessage.ERROR_SOMETHING_WRONG.getName());
     }
     return index + (shiftNumber(str) - 1);
   }
@@ -85,21 +87,27 @@ public class Parser {
       }
       isUnary = true;
     } else if (!Objects.equals(op, " ")) {
-      throw new IllegalArgumentException("Error: Wrong argument");
+      throw new IllegalArgumentException(ErrorMessage.ERROR_WRONG_ARGUMENT.getName());
     }
     return index + shiftOperation(op);
   }
 
   int shiftOperation(final String op) {
     int result = 0;
-    if (Objects.equals(op, "ln") || Objects.equals(op, "mod")) {
+    if (Objects.equals(op, UnaryOperationType.LN.getOperation()) ||
+        Objects.equals(op, UnaryOperationType.MOD.getOperation())) {
       result = 2;
-    } else if (Objects.equals(op, "sin") || Objects.equals(op, "cos") || Objects.equals(op, "log")
-        || Objects.equals(op, "tan")
+    } else if (Objects.equals(op, UnaryOperationType.SIN.getOperation()) ||
+               Objects.equals(op, UnaryOperationType.COS.getOperation()) ||
+               Objects.equals(op, UnaryOperationType.LOG.getOperation()) ||
+               Objects.equals(op, UnaryOperationType.TAN.getOperation())
     ) {
       result = 3;
-    } else if (Objects.equals(op, "sqrt") || Objects.equals(op, "atan") || Objects.equals(op,
-        "acos") || Objects.equals(op, "asin")) {
+    } else if (Objects.equals(op, UnaryOperationType.SQRT.getOperation()) ||
+               Objects.equals(op, UnaryOperationType.ATAN.getOperation()) ||
+               Objects.equals(op, UnaryOperationType.ACOS.getOperation()) ||
+               Objects.equals(op, UnaryOperationType.ASIN.getOperation())
+    ) {
       result = 4;
     }
     return result;
@@ -108,7 +116,8 @@ public class Parser {
   int shiftNumber(String value) {
     boolean isDot = false;
     int result = 0;
-    while (Character.isDigit(value.charAt(result)) || value.charAt(result) == '.' && !isDot) {
+    while (Character.isDigit(value.charAt(result)) ||
+           value.charAt(result) == '.' && !isDot) {
       if (value.charAt(result) == '.') {
         isDot = true;
       }
@@ -128,26 +137,29 @@ public class Parser {
 
   int priority(final String op) {
     int result = -1;
-    if (Objects.equals(op, "+") ||
-        Objects.equals(op, "-") ||
-        Objects.equals(op, "~") ||
-        Objects.equals(op, "plus")) {
+    if (Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.ADDITION) ||
+        Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.SUBTRACTION) ||
+        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.TILDE) ||
+        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.PLUS)
+    ) {
       result = 1;
-    } else if (Objects.equals(op, "*") ||
-        Objects.equals(op, "/") ||
-        Objects.equals(op, "mod")) {
+    } else if (Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.MULTIPLICATION) ||
+               Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.DIVISION) ||
+               Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.MOD)
+    ) {
       result = 2;
-    } else if (Objects.equals(op, "^")) {
+    } else if (Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.DEGREE)) {
       result = 3;
-    } else if (Objects.equals(op, "sin") ||
-        Objects.equals(op, "cos") ||
-        Objects.equals(op, "tan") ||
-        Objects.equals(op, "asin") ||
-        Objects.equals(op, "acos") ||
-        Objects.equals(op, "atan") ||
-        Objects.equals(op, "log") ||
-        Objects.equals(op, "ln") ||
-        Objects.equals(op, "sqrt")) {
+    } else if (Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.SIN) ||
+        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.COS) ||
+        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.TAN) ||
+        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.ATAN) ||
+        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.ASIN) ||
+        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.ACOS) ||
+        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.LOG) ||
+        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.LN) ||
+        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.SQRT)
+    ) {
       result = 4;
     }
     return result;
@@ -156,25 +168,25 @@ public class Parser {
   String getOperations(final String str) {
     String op = " ";
     if (str.indexOf("sin(") == 0) {
-      op = "sin";
+      op = UnaryOperationType.SIN.getOperation();
     } else if (str.indexOf("cos(") == 0) {
-      op = "cos";
+      op = UnaryOperationType.COS.getOperation();
     } else if (str.indexOf("tan(") == 0) {
-      op = "tan";
+      op = UnaryOperationType.TAN.getOperation();
     } else if (str.indexOf("acos(") == 0) {
-      op = "acos";
+      op = UnaryOperationType.ACOS.getOperation();
     } else if (str.indexOf("asin(") == 0) {
-      op = "asin";
+      op = UnaryOperationType.ASIN.getOperation();
     } else if (str.indexOf("atan(") == 0) {
-      op = "atan";
+      op = UnaryOperationType.ATAN.getOperation();
     } else if (str.indexOf("sqrt(") == 0) {
-      op = "sqrt";
+      op = UnaryOperationType.SQRT.getOperation();
     } else if (str.indexOf("ln(") == 0) {
-      op = "ln";
+      op = UnaryOperationType.LN.getOperation();
     } else if (str.indexOf("log(") == 0) {
-      op = "log";
+      op = UnaryOperationType.LOG.getOperation();
     } else if (str.indexOf("mod") == 0) {
-      op = "mod";
+      op = UnaryOperationType.MOD.getOperation();
     }
     return op;
   }

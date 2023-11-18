@@ -11,6 +11,7 @@ public enum UnaryOperationType {
     ACOS("acos"),
     ASIN("asin"),
     TILDE("~"),
+    MOD("mod"),
     PLUS("plus");
 
     private final String operation;
@@ -26,6 +27,15 @@ public enum UnaryOperationType {
             }
         }
         return false;
+    }
+
+    public static UnaryOperationType fromString(String text) {
+        for (UnaryOperationType b : UnaryOperationType.values()) {
+            if (b.operation.equalsIgnoreCase(text)) {
+                return b;
+            }
+        }
+        return null;
     }
 
     public String getOperation() {
