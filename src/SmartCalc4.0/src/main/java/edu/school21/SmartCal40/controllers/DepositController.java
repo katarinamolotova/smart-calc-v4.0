@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-//@Controller
+@Controller
 @AllArgsConstructor
 public class DepositController {
     private final DepositCalcModel depositModel;
@@ -26,8 +26,8 @@ public class DepositController {
      * @param termType          тип периода (месяцев/лет)
      * @param percent           процентная ставка
      * @param taxPercent        налоговая ставка
-     * @param capitalization    капитализация процентов
-     * @param periodPayment     периодичность выплат
+     * @param capitalization    капитализация процентов (Нет/Ежемесячно/Ежеквартально/Ежегодно)
+     * @param periodPayment     периодичность выплат (Единовременно/Ежемесячно/Ежеквартально/Ежегодно)
      * @param openDate          дата открытия вклада
      * @param addition          ежемесячное пополнение (т.е. на какую сумму пополняет пользователь вклад раз в месяц)
      * @param withdrawal        ежемесячное снятие (т.е. какую сумму пользователь снимает раз в месяц)
