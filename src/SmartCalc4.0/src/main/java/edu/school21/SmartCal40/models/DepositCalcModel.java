@@ -68,7 +68,7 @@ public class DepositCalcModel {
     if(Objects.isNull(startParameters)) {
       return new DepositResultDTO(
               true,
-              ErrorMessage.ERROR_SOMETHING_WRONG.getName()
+              ErrorMessage.ERROR_SOMETHING_WRONG
       );
 
     } else if(!startParameters.isBroken()) {
@@ -81,7 +81,7 @@ public class DepositCalcModel {
     return new DepositResultDTO(
             true,
             startParameters.getErrorMessage()
-                           .getName());
+    );
   }
 
   private double resultPercent(final DepositParametersDTO dto) {
