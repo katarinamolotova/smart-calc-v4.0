@@ -57,7 +57,7 @@
 </form>
 <br>
 
-<div class="form">
+<div class="form" th:if="${result}">
     <div>
         <label>
             Переплата по кредиту (руб.):
@@ -75,7 +75,7 @@
     <div>
         <label>
             Ежемесячный платеж:
-            <textarea readonly name="monthly-pay" th:value="${result.everyMonthPay}"></textarea>
+            <textarea readonly name="monthly-pay" th:text="${result.everyMonthPay}"></textarea>
         </label>
     </div>
 </div>

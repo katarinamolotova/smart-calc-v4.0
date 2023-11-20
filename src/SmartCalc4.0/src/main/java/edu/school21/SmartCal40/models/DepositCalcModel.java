@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Component
-@AllArgsConstructor
 public class DepositCalcModel {
 
   private static final Integer MONTHS_OF_YEAR = 12;

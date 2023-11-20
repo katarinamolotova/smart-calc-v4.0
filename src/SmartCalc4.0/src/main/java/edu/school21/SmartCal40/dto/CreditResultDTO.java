@@ -34,7 +34,7 @@ public class CreditResultDTO {
     private String getEveryMonthPayAsString(final ArrayList<Double> everyMonthPay) {
         return IntStream
                 .range(0, everyMonthPay.size())
-                .mapToObj(i -> String.format("Месяц %d: %f руб.", i + 1, everyMonthPay.get(i)))
+                .mapToObj(i -> String.format("Месяц %d: %f руб.\n", i + 1, everyMonthPay.get(i)))
                 .collect(Collectors.joining());
     }
 }

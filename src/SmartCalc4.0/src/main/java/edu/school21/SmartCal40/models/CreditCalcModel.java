@@ -10,14 +10,13 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
-@AllArgsConstructor
 public class CreditCalcModel {
 
   private static final Double MAX_PERCENT = 100.;
   private static final Double SCALE = 100.;
   private static final Integer MONTHS_OF_YEAR = 12;
-  private double overpay;
-  private double totalPayment;
+  private Double overpay;
+  private Double totalPayment;
   private ArrayList<Double> everyMothPay;
 
   public ErrorMessage calculate(
@@ -27,6 +26,9 @@ public class CreditCalcModel {
           final String termType,
           final String percent
   ) {
+    overpay = 0.0;
+    totalPayment = 0.0;
+    everyMothPay = new ArrayList<>();
     try {
       everyMothPay(
               CreditType.getCreditType(type),
@@ -52,7 +54,6 @@ public class CreditCalcModel {
       final TermType termType,
       final double percent
   ) {
-    everyMothPay = new ArrayList<>();
     double dynamicSum = sum;
     final int period =
         (termType == TermType.MONTH) ? amountOfMonth : amountOfMonth * MONTHS_OF_YEAR;
