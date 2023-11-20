@@ -58,7 +58,7 @@ public class CreditCalcModel {
       final TermType termType,
       final double percent
   ) {
-    ArrayList<Double>everyMothPay = new ArrayList<>();
+    everyMothPay = new ArrayList<>();
     double dynamicSum = sum;
     final int period =
         (termType == TermType.MONTH) ? amountOfMonth : amountOfMonth * MONTHS_OF_YEAR;
