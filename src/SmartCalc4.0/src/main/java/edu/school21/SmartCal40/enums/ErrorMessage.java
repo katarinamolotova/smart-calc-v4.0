@@ -1,6 +1,7 @@
 package edu.school21.SmartCal40.enums;
 
 public enum ErrorMessage {
+    SUCCESS("SUCCESS"),
     ERROR_ARGUMENTS("Error: Not enough arguments"),
     ERROR_DIVISION_ZERO("Error: Division by zero"),
     ERROR_UNDEFINE_RESULT("Error: Undefined result"),

@@ -1,5 +1,7 @@
 package edu.school21.SmartCal40.controllers;
 
+import edu.school21.SmartCal40.dto.CreditResultDTO;
+import edu.school21.SmartCal40.enums.ErrorMessage;
 import edu.school21.SmartCal40.models.CreditCalcModel;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,7 +20,7 @@ public class CreditController {
         return "credit";
     }
 
-    @PostMapping("/credit") //  провалидировать все
+    @PostMapping("/credit")
     public String getMainPage(
             @RequestParam("summa") final String summa,
             @RequestParam("percent") final String percent,
@@ -27,7 +29,12 @@ public class CreditController {
             @RequestParam("credit-type") final String creditType,
             final Model model
     ) {
-//        creditModel.calculate();
+        ErrorMessage message = creditModel.calculate(creditType, summa, period, termType, percent);
+        if (message.equals(ErrorMessage.SUCCESS)) {
+            model.addAttribute("result", creditModel.getResult());
+        } else {
+            model.addAttribute("result", new CreditResultDTO(true, message.getName()));
+        }
         return "credit";
     }
 }

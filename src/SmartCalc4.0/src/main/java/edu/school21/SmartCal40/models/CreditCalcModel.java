@@ -1,6 +1,8 @@
 package edu.school21.SmartCal40.models;
 
+import edu.school21.SmartCal40.dto.CreditResultDTO;
 import edu.school21.SmartCal40.enums.CreditType;
+import edu.school21.SmartCal40.enums.ErrorMessage;
 import edu.school21.SmartCal40.enums.TermType;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -24,17 +26,29 @@ public class CreditCalcModel {
     this.totalPayment = 0;
   }
 
-
-  public void calculate(
-      final CreditType type,
-      final double sum,
-      final int amountOfMonth,
-      final TermType termType,
-      final double percent
+  public ErrorMessage calculate(
+          final String type,
+          final String sum,
+          final String amountOfMonth,
+          final String termType,
+          final String percent
   ) {
-    everyMothPay(type, sum, amountOfMonth, termType, percent);
+    try {
+      everyMothPay(
+              CreditType.getCreditType(type),
+              Double.parseDouble(sum),
+              Integer.parseInt(amountOfMonth),
+              TermType.getTermType(termType),
+              Double.parseDouble(percent)
+      );
+    } catch (NullPointerException e) {
+      return ErrorMessage.ERROR_SOMETHING_WRONG;
+    } catch (NumberFormatException e) {
+      return ErrorMessage.ERROR_WRONG_ARGUMENT;
+    }
     totalPayment();
-    overpay(sum);
+    overpay(Double.parseDouble(sum));
+    return ErrorMessage.SUCCESS;
   }
 
   private void everyMothPay(
@@ -44,7 +58,7 @@ public class CreditCalcModel {
       final TermType termType,
       final double percent
   ) {
-//    everyMothPay = new ArrayList<>();
+    ArrayList<Double>everyMothPay = new ArrayList<>();
     double dynamicSum = sum;
     final int period =
         (termType == TermType.MONTH) ? amountOfMonth : amountOfMonth * MONTHS_OF_YEAR;
@@ -69,5 +83,9 @@ public class CreditCalcModel {
 
   private void overpay(final double sum) {
     overpay = Math.ceil((totalPayment - sum) * SCALE) / SCALE;
+  }
+
+  public CreditResultDTO getResult() {
+    return new CreditResultDTO(overpay, totalPayment, everyMothPay);
   }
 }
