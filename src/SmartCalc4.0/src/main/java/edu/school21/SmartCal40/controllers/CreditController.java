@@ -21,7 +21,7 @@ public class CreditController {
     }
 
     @PostMapping("/credit")
-    public String getMainPage(
+    public String getCreditResult(
             @RequestParam("summa") final String summa,
             @RequestParam("percent") final String percent,
             @RequestParam("period") final String period,

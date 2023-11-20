@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-//@Component
-//@AllArgsConstructor
+@Component
+@AllArgsConstructor
 public class DepositCalcModel {
 
   private static final Integer MONTHS_OF_YEAR = 12;
@@ -21,18 +21,18 @@ public class DepositCalcModel {
   private static final Double MAX_PERCENT = 100.;
   private static final Double SCALE = 100.;
 
-  private double result = 0;
-  private double intermediateSum = 0;
-  private double tempPercent = 0;
-  private double add = 0;
-  private double sum = 0;
-  private double sub = 0;
-  private int countPay = 0;
-  private int countCap = 0;
+  private double result;
+  private double intermediateSum;
+  private double tempPercent;
+  private double add;
+  private double sum;
+  private double sub;
+  private int countPay;
+  private int countCap;
 
   public double resultPercent(
       final double summa,
-      final int amountOfMonth,
+      final int amountOfMonthsOrYears,
       final TermType termType,
       final double percent,
       final PeriodType capitalizationPeriod,
@@ -44,7 +44,7 @@ public class DepositCalcModel {
     sum = summa;
     intermediateSum = summa;
     final int period =
-        (termType == TermType.MONTH) ? amountOfMonth : amountOfMonth * MONTHS_OF_YEAR;
+        (termType == TermType.MONTH) ? amountOfMonthsOrYears : amountOfMonthsOrYears * MONTHS_OF_YEAR;
 
     for (int i = monthStart; i < monthStart + period; i++, countCap++, countPay++) {
       // счет с нуля
