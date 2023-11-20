@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Deposit</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/form.css" th:href="@{/css/form.css}">
 </head>
 <body>
 
-<div>
-<form action="">
+<div class="content">
+<h2>Депозитный калькулятор</h2>
+
+<form class="form" action="/deposit">
     <div>
         <label>
-            Сумма вклада:
+            Сумма вклада (руб.):
             <input id="summa" name="summa" type="number" min="0" value="1000000">
-            руб.
         </label>
     </div>
 
@@ -20,7 +22,8 @@
     <div>
         <label>
             Срок размещения:
-            <input id="period" name="period" type="number" min="1" max="720" value="12">
+            <br>
+            <input style="width: 75%;" id="period" name="period" type="number" min="1" max="720" value="12">
             <select name="term-type">
                 <option>Месяцев</option>
                 <option>Лет</option>
@@ -30,24 +33,22 @@
 
     <div>
         <label>
-            Процентная ставка:
+            Процентная ставка (%):
             <input id="percent" name="percent" type="number" min="0" max="100" value="5">
-            %
         </label>
     </div>
 
     <div>
         <label>
-            Налоговая ставка:
+            Налоговая ставка (%):
             <input id="tax-percent" name="tax-percent" type="number" min="0" max="100" value="0">
-            %
         </label>
     </div>
 
     <div>
         <label>
             Капитализация:
-            <select name="capitalization">
+            <select class="full-select" name="capitalization">
                 <option>Нет</option>
                 <option>Ежемесячно</option>
                 <option>Ежеквартально</option>
@@ -59,7 +60,7 @@
     <div>
         <label>
             Периодичность:
-            <select name="period-payment">
+            <select class="full-select" name="period-payment">
                 <option>Единовременно</option>
                 <option>Ежемесячно</option>
                 <option>Ежеквартально</option>
@@ -75,18 +76,44 @@
         </label>
     </div>
 
-<!--    список пополнений-->
-<!--    список снятий-->
-
-    <button type="submit">Расчитать</button>
-</form>
-
-<div>
     <div>
         <label>
-            Начисленные проценты:
-            <input name="result-percent" type="number" min="0" value="0">
-            руб.
+            Ежемесячное пополнение (руб.):
+            <input name="addition" type="number" min="0" value="0">
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Ежемесячное снятие (руб.):
+            <input name="withdrawal" type="number" min="0" value="0">
+        </label>
+    </div>
+
+    <div class="block">
+        <button type="submit">Рассчитать</button>
+    </div>
+</form>
+
+<div class="form">
+    <div>
+        <label>
+            Сумма на вкладе к концу срока (руб.):
+            <input readonly name="result-summa" type="number" min="0" value="0">
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Начисленные проценты (руб.):
+            <input readonly name="result-percent" type="number" min="0" value="0">
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Сумма налога (руб.):
+            <input readonly name="result-tax" type="number" min="0" value="0">
         </label>
     </div>
 </div>

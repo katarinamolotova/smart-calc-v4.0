@@ -21,17 +21,6 @@ public class DepositCalcModel {
   private static final Double MAX_PERCENT = 100.;
   private static final Double SCALE = 100.;
 
-  public DepositCalcModel() {
-    this.result = 0;
-    this.intermediateSum = 0;
-    this.tempPercent = 0;
-    this.add = 0;
-    this.sum = 0;
-    this.sub = 0;
-    this.countPay = 0;
-    this.countCap = 0;
-  }
-
   private double result;
   private double intermediateSum;
   private double tempPercent;

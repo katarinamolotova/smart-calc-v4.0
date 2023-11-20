@@ -3,31 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Credit</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/form.css" th:href="@{/css/form.css}">
 </head>
 <body>
 
-<div>
-<form action="/credit" method="post">
+<div class="content">
+<h2>Кредитный калькулятор</h2>
+
+<form class="form" action="/credit" method="post">
     <div>
         <label>
-            Общая сумма:
+            Общая сумма (руб.):
             <input id="summa" name="summa" type="number" min="0" value="1000000">
-            руб.
         </label>
     </div>
 
     <div>
         <label>
-            Процентная ставка:
+            Процентная ставка (%):
             <input id="percent" name="percent" type="number" min="0" max="100" value="5">
-            %
         </label>
     </div>
 
     <div>
         <label>
             Срок:
-            <input id="period" name="period" type="number" min="1" max="720" value="12">
+            <br>
+            <input style="width: 75%;" id="period" name="period" type="number" min="1" max="720" value="12">
             <select name="term-type">
                 <option>Месяцев</option>
                 <option>Лет</option>
@@ -36,35 +38,36 @@
     </div>
 
     <fieldset>
-        <legend>Тип:</legend>
-        <label>
-            <input type="radio" checked name="credit-type" value="annuity">
-            Аннуитетный
-        </label>
+    <legend>Тип:</legend>
+    <label>
+        <input type="radio" checked name="credit-type" value="annuity">
+        Аннуитетный
+    </label>
 
-        <label>
-            <input type="radio" name="credit-type" value="differentiated">
-            Дифференцированный
-        </label>
+    <label>
+        <input type="radio" name="credit-type" value="differentiated">
+        Дифференцированный
+    </label>
     </fieldset>
+    <br>
 
-    <button type="submit">Расчитать</button>
+    <div class="block">
+        <button type="submit">Рассчитать</button>
+    </div>
 </form>
-
-<div>
+<br>
+<div class="form">
     <div>
         <label>
-            Переплата по кредиту:
-            <input readonly name="overpay" type="number" min="0">
-            руб.
+            Переплата по кредиту (руб.):
+            <input readonly name="overpay" type="number" min="0" value="0">
         </label>
     </div>
 
     <div>
         <label>
-            Общая выплата:
-            <input readonly name="total-payment" type="number" min="0">
-            руб.
+            Общая выплата (руб.):
+            <input readonly name="total-payment" type="number" min="0" value="0">
         </label>
     </div>
 
