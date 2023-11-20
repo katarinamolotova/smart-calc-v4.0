@@ -4,23 +4,20 @@ import edu.school21.SmartCal40.enums.PeriodType;
 import edu.school21.SmartCal40.enums.TermType;
 import lombok.Getter;
 
-import java.time.LocalDate;
-import java.util.Map;
-
 @Getter
 public class DepositParametersDTO {
-    double summa = 0;
-    int amountOfMonth = 0;
+    double summa;
+    int amountOfMonth;
     TermType termType = null;
-    double percent = 0;
+    double percent;
     PeriodType capitalizationPeriod = null;
     PeriodType periodPay = null;
-    int monthStart = 0;
-    Map<LocalDate, Double> additions = null;
-    Map<LocalDate, Double> withdrawal = null;
-    double sumBegin = 0;
-    double resultPercent = 0;
-    double taxPercent = 0;
+    int monthStart;
+    double additions;
+    double withdrawal;
+    double sumBegin;
+    double resultPercent;
+    double taxPercent;
     boolean isBroken = false;
     ErrorMessage errorMessage = ErrorMessage.SUCCESS;
 
@@ -32,8 +29,8 @@ public class DepositParametersDTO {
             final String capitalizationPeriod,
             final String periodPay,
             final String monthStart,
-            Map<LocalDate, Double> additions,
-            Map<LocalDate, Double> withdrawal,
+            final String additions,
+            final String withdrawal,
             final String sumBegin,
             final String resultPercent,
             final String taxPercent
@@ -46,8 +43,8 @@ public class DepositParametersDTO {
             this.capitalizationPeriod = PeriodType.getPeriodType(capitalizationPeriod);
             this.periodPay = PeriodType.getPeriodType(periodPay);
             this.monthStart = Integer.parseInt(monthStart);
-            this.additions = additions;
-            this.withdrawal = withdrawal;
+            this.additions = Double.parseDouble(additions);
+            this.withdrawal = Double.parseDouble(withdrawal) * -1;
             this.sumBegin = Double.parseDouble(sumBegin);
             this.resultPercent = Double.parseDouble(resultPercent);
             this.taxPercent = Double.parseDouble(taxPercent);

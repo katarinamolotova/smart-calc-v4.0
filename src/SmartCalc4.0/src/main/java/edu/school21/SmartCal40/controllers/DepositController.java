@@ -30,7 +30,8 @@ public class DepositController {
             @RequestParam("capitalization-period") final String capitalizationPeriod,
             @RequestParam("period-pay") final String periodPay,
             @RequestParam("month-start") final String monthStart,
-            /* как сюда бля мапу засунуть */
+            @RequestParam("additions") final String additions,
+            @RequestParam("withdrawal") final String withdrawal,
             @RequestParam("sum-begin") final String sumBegin,
             @RequestParam("result-percent") final String resultPercent,
             @RequestParam("tax-percent") final String taxPercent,
@@ -44,8 +45,8 @@ public class DepositController {
                 capitalizationPeriod,
                 periodPay,
                 monthStart,
-                null, // тут должна быть маппа
-                null, // тут должна быть маппа
+                additions,
+                withdrawal,
                 sumBegin,
                 resultPercent,
                 taxPercent

@@ -43,8 +43,8 @@ public class DepositCalcModel {
           final String capitalizationPeriod,
           final String periodPay,
           final String monthStart,
-          Map<LocalDate, Double> additions,
-          Map<LocalDate, Double> withdrawal,
+          final String additions,
+          final String withdrawal,
           final String sumBegin,
           final String resultPercent,
           final String taxPercent
@@ -94,8 +94,8 @@ public class DepositCalcModel {
       final int numberOfMonth = (i + MONTHS_OF_YEAR - 1) % MONTHS_OF_YEAR;
       final int daysInMonth = (numberOfMonth == 1) ? 28 : (31 - numberOfMonth % 7 % 2);
 
-      checkAddList(numberOfMonth, dto.getAdditions());
-      checkSubList(numberOfMonth, dto.getWithdrawal());
+//      checkAddList(numberOfMonth, dto.getAdditions());
+//      checkSubList(numberOfMonth, dto.getWithdrawal());
       checkCapitalisation(dto.getCapitalizationPeriod());
       checkPeriodPay(dto.getPeriodPay());
 
@@ -109,8 +109,8 @@ public class DepositCalcModel {
 
   private double sumAtTheEnd(final DepositParametersDTO dto) {
     double result = dto.getSumBegin() + dto.getResultPercent();
-    result += dto.getAdditions().values().stream().mapToDouble(i -> i).sum();
-    result += dto.getWithdrawal().values().stream().mapToDouble(i -> -1 * i).sum();
+    result += dto.getAdditions();
+    result += dto.getWithdrawal();
     return Math.ceil(result * SCALE) / SCALE;
   }
 
