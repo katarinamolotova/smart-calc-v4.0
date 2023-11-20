@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-//@Controller
+@Controller
 @AllArgsConstructor
 public class DepositController {
     final DepositCalcModel model;
@@ -18,6 +18,8 @@ public class DepositController {
 
     @PostMapping("/deposit")
     public String getMainPage() {
+//        model.validateInputParameters();
+        model.getResult();
         return "deposit";
     }
 }

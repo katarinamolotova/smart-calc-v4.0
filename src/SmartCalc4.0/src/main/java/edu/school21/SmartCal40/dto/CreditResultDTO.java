@@ -13,17 +13,20 @@ public class CreditResultDTO {
     private String errorMassage = ErrorMessage.SUCCESS.getName();
 
 
-    public CreditResultDTO(final double overPay,
-                           final double totalPayment,
-                           final ArrayList<Double> everyMothPay
+    public CreditResultDTO(
+            final double overPay,
+            final double totalPayment,
+            final ArrayList<Double> everyMothPay
     ) {
         this.overPay = overPay;
         this.totalPayment = totalPayment;
         this.everyMothPay = everyMothPay;
     }
 
-    public CreditResultDTO(final boolean error,
-                           final String errorMassage) {
+    public CreditResultDTO(
+            final boolean error,
+            final String errorMassage
+    ) {
         this.isBroken = error;
         this.errorMassage = errorMassage;
     }
