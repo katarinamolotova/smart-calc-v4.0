@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>about</title>
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/about.css" th:href="@{/css/about.css}">
 </head>
 <body>
 
@@ -11,7 +12,8 @@
 <br>
 <br>
 
-<div style="max-width: 600px; text-align: center;">
+<div class="main">
+<div class="block">
     <h1>SmartCalc</h1>
 
     <h2>О программе</h2>
@@ -23,10 +25,10 @@
         Помимо вычисления выражений калькулятор так же поддерживает использование переменной x
         и построение графика соответствующей функции.</p>
 
-    <div style="display: flex; justify-content: center;">
+    <div class="main">
         <div style="padding-right:50px;">
             <h3>Арифметические операторы</h3>
-            <ul style="list-style-type: none; padding: 0;">
+            <ul style="padding: 0;">
                 <li>Скобки</li>
                 <li>Сложение</li>
                 <li>Вычитание</li>
@@ -40,7 +42,7 @@
         </div>
         <div>
             <h3>Функции</h3>
-            <ul style="list-style-type: none; padding: 0;">
+            <ul style="padding: 0;">
                 <li>Вычисляет косинус</li>
                 <li>Вычисляет синус</li>
                 <li>Вычисляет тангенс</li>
@@ -61,5 +63,7 @@
 
     <p>Дополнительно присутствует функционал депозитного и кредитного калькулятора.</p>
 </div>
+</div>
+
 </body>
 </html>
