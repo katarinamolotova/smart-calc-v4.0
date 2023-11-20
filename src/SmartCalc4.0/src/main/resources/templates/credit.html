@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Credit</title>
@@ -56,25 +56,26 @@
     </div>
 </form>
 <br>
+
 <div class="form">
     <div>
         <label>
             Переплата по кредиту (руб.):
-            <input readonly name="overpay" type="number" min="0" value="0">
+            <input readonly name="overpay" type="number" min="0" value="0" th:value="${result.overPay}">
         </label>
     </div>
 
     <div>
         <label>
             Общая выплата (руб.):
-            <input readonly name="total-payment" type="number" min="0" value="0">
+            <input readonly name="total-payment" type="number" min="0" value="0" th:value="${result.totalPayment}">
         </label>
     </div>
 
     <div>
         <label>
             Ежемесячный платеж:
-            <textarea readonly name="monthly-pay"></textarea>
+            <textarea readonly name="monthly-pay" th:value="${result.everyMonthPay}"></textarea>
         </label>
     </div>
 </div>
