@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Credit</title>
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
 </head>
 <body>
 
+<header th:replace="~{fragments/header :: header}"></header>
+<br>
+<br>
 <div class="content">
-<h2>Кредитный калькулятор</h2>
 
 <form class="form" action="/credit" method="post">
     <div>

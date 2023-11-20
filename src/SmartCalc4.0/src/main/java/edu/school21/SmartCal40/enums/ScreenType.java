@@ -1,22 +1,21 @@
 package edu.school21.SmartCal40.enums;
 
 public enum ScreenType {
-    BASIC("/forms/basic.fxml", "SmartCalc3"),
-    CREDIT("/forms/credit.fxml", "CreditCalc"),
-    DEPOSIT("/forms/deposit.fxml", "DepositCalc"),
-    SETTINGS("/forms/settings.fxml", "Settings"),
-    ABOUT("/forms/about.fxml", "About");
+    BASIC("Главная", "SmartCalc3"),
+    CREDIT("Кредитный калькулятор", "CreditCalc"),
+    DEPOSIT("Депозитный калькулятор", "DepositCalc"),
+    ABOUT("Справка", "About");
 
-    private final String fileName;
+    private final String name;
     private final String title;
 
-    ScreenType(final String fileName, final String title) {
-        this.fileName = fileName;
+    ScreenType(final String name, final String title) {
+        this.name = name;
         this.title = title;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getName() {
+        return name;
     }
 
     public String getTitle() {
