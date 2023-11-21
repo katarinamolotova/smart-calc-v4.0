@@ -36,4 +36,13 @@ public class CreditParametersDTO {
             errorMessage = ErrorMessage.ERROR_SOMETHING_WRONG;
         }
     }
+
+    public CreditParametersDTO() {
+        this.type = CreditType.ANNUITY;
+        this.sum = 0;
+        this.amountOfMonth = 12;
+        this.termType = TermType.MONTH;
+        this.percent = 5;
+        this.isBroken = false;
+    }
 }

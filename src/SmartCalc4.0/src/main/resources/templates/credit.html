@@ -17,14 +17,14 @@
     <div>
         <label>
             Общая сумма (руб.):
-            <input id="summa" name="summa" type="number" min="0" value="1000000">
+            <input id="summa" name="summa" type="number" min="0" value="1000000" th:value="${params.sum}">
         </label>
     </div>
 
     <div>
         <label>
             Процентная ставка (%):
-            <input id="percent" name="percent" type="number" min="0" max="100" value="5">
+            <input id="percent" name="percent" type="number" min="0" max="100" value="5" th:value="${params.percent}">
         </label>
     </div>
 
@@ -32,7 +32,7 @@
         <label>
             Срок:
             <br>
-            <input style="width: 73%;" id="period" name="period" type="number" min="1" max="720" value="12">
+            <input style="width: 73%;" id="period" name="period" type="number" min="1" max="720" value="12" th:value="${params.amountOfMonth}">
             <select name="term-type">
                 <option>Месяцев</option>
                 <option>Лет</option>

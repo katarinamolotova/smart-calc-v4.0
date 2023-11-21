@@ -68,7 +68,7 @@ public class BasicCalcModel {
       bd = bd.setScale(AROUND_VAR, RoundingMode.HALF_UP);
       return bd.doubleValue();
     } catch (final Exception e) {
-      throw new IllegalArgumentException("Something wrong");
+      throw new IllegalArgumentException(ErrorMessage.ERROR_SOMETHING_WRONG.getName());
     }
   }
 }

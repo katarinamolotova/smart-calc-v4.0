@@ -50,4 +50,19 @@ public class DepositParametersDTO {
             this.isBroken = true;
         }
     }
+
+    public DepositParametersDTO() {
+        this.summa = 0;
+        this.amountOfMonth = 12;
+        this.termType = TermType.MONTH;
+        this.percent = 5;
+        this.capitalizationPeriod = PeriodType.MONTHLY;
+        this.periodPay = PeriodType.MONTHLY;
+        this.monthStart = 1;
+        this.additions = 0;
+        this.withdrawal = 0;
+        this.taxPercent = 13;
+        this.isBroken = false;
+    }
+
 }

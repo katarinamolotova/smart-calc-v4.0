@@ -1,5 +1,6 @@
 package edu.school21.SmartCal40.controllers;
 
+import edu.school21.SmartCal40.dto.DepositParametersDTO;
 import edu.school21.SmartCal40.dto.DepositResultDTO;
 import edu.school21.SmartCal40.enums.ErrorMessage;
 import edu.school21.SmartCal40.models.DepositCalcModel;
@@ -16,7 +17,10 @@ public class DepositController {
     private final DepositCalcModel depositModel;
 
     @GetMapping("/deposit")
-    public String getDepositPage() {
+    public String getDepositPage(
+            final Model model
+    ) {
+        model.addAttribute("params", new DepositParametersDTO());
         return "deposit";
     }
 
@@ -64,6 +68,7 @@ public class DepositController {
         );
 
         DepositResultDTO resultDTO = depositModel.getResult();
+        model.addAttribute("param", depositModel.getStartParameters());
         if (resultDTO.getErrorMassage().equals(ErrorMessage.SUCCESS)) {
             model.addAttribute("result", resultDTO);
         } else {
