@@ -3,7 +3,6 @@ package edu.school21.SmartCal40.dto;
 import edu.school21.SmartCal40.enums.ErrorMessage;
 import lombok.Getter;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

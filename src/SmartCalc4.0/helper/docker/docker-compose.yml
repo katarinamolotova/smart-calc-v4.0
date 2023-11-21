@@ -48,7 +48,7 @@ services:
 #      - ./dist/import:/app/import
 #      - ./dist/export:/app/export
 #    restart: unless-stopped
-
+#
 #  service-nginx:
 #    image: nginx
 #    container_name: S21Nginx
@@ -60,7 +60,7 @@ services:
 #      - "80:80"
 #    volumes:
 #      - ./dist/nginx:/etc/nginx/conf.d
-
+#
 #  service-pgadmin:
 #    image: dpage/pgadmin4:7
 #    container_name: S21PGadmin
