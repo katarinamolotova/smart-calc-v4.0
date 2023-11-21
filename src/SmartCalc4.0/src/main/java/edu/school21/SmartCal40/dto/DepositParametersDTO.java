@@ -4,6 +4,9 @@ import edu.school21.SmartCal40.enums.PeriodType;
 import edu.school21.SmartCal40.enums.TermType;
 import lombok.Getter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Getter
 public class DepositParametersDTO {
     double summa;
@@ -13,6 +16,7 @@ public class DepositParametersDTO {
     PeriodType capitalizationPeriod = null;
     PeriodType periodPay = null;
     int monthStart;
+    LocalDate start;
     double additions;
     double withdrawal;
     double taxPercent;
@@ -39,6 +43,7 @@ public class DepositParametersDTO {
             this.capitalizationPeriod = PeriodType.getPeriodType(capitalizationPeriod);
             this.periodPay = PeriodType.getPeriodType(periodPay);
             this.monthStart = Integer.parseInt(monthStart);
+            this.start = LocalDate.parse(monthStart, DateTimeFormatter.ISO_LOCAL_DATE);
             this.additions = Double.parseDouble(additions);
             this.withdrawal = Double.parseDouble(withdrawal) * -1;
             this.taxPercent = Double.parseDouble(taxPercent);
@@ -52,17 +57,14 @@ public class DepositParametersDTO {
     }
 
     public DepositParametersDTO() {
-        this.summa = 0;
+        this.summa = 1000;
         this.amountOfMonth = 12;
-        this.termType = TermType.MONTH;
+        this.termType = TermType.YEAR;
         this.percent = 5;
-        this.capitalizationPeriod = PeriodType.MONTHLY;
-        this.periodPay = PeriodType.MONTHLY;
-        this.monthStart = 1;
-        this.additions = 0;
-        this.withdrawal = 0;
+        this.capitalizationPeriod = PeriodType.MONTHLY; // не работает
+        this.periodPay = PeriodType.MONTHLY; // не работает
+        this.start = LocalDate.now();
         this.taxPercent = 13;
         this.isBroken = false;
     }
-
 }
