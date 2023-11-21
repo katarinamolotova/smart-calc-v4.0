@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Deposit</title>
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
 </head>
 <body>
 
+<header th:replace="~{fragments/header :: header}"></header>
+<br>
+<br>
 <div class="content">
-<h2>Депозитный калькулятор</h2>
 
 <form class="form" action="/deposit">
     <div>
@@ -23,7 +26,7 @@
         <label>
             Срок размещения:
             <br>
-            <input style="width: 75%;" id="period" name="period" type="number" min="1" max="720" value="12">
+            <input style="width: 73%;" id="period" name="period" type="number" min="1" max="720" value="12">
             <select name="term-type">
                 <option>Месяцев</option>
                 <option>Лет</option>

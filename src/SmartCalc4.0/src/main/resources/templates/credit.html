@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Credit</title>
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
 </head>
 <body>
 
+<header th:replace="~{fragments/header :: header}"></header>
+<br>
+<br>
 <div class="content">
-<h2>Кредитный калькулятор</h2>
 
 <form class="form" action="/credit" method="post">
     <div>
@@ -29,7 +32,7 @@
         <label>
             Срок:
             <br>
-            <input style="width: 75%;" id="period" name="period" type="number" min="1" max="720" value="12">
+            <input style="width: 73%;" id="period" name="period" type="number" min="1" max="720" value="12">
             <select name="term-type">
                 <option>Месяцев</option>
                 <option>Лет</option>
@@ -56,25 +59,26 @@
     </div>
 </form>
 <br>
-<div class="form">
+
+<div class="form" th:if="${result}">
     <div>
         <label>
             Переплата по кредиту (руб.):
-            <input readonly name="overpay" type="number" min="0" value="0">
+            <input readonly name="overpay" type="number" min="0" value="0" th:value="${result.overPay}">
         </label>
     </div>
 
     <div>
         <label>
             Общая выплата (руб.):
-            <input readonly name="total-payment" type="number" min="0" value="0">
+            <input readonly name="total-payment" type="number" min="0" value="0" th:value="${result.totalPayment}">
         </label>
     </div>
 
     <div>
         <label>
             Ежемесячный платеж:
-            <textarea readonly name="monthly-pay"></textarea>
+            <textarea readonly name="monthly-pay" th:text="${result.everyMonthPay}"></textarea>
         </label>
     </div>
 </div>

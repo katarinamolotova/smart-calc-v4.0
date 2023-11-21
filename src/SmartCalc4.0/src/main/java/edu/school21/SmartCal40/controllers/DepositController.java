@@ -1,8 +1,5 @@
 package edu.school21.SmartCal40.controllers;
 
-import edu.school21.SmartCal40.dto.CreditResultDTO;
-import edu.school21.SmartCal40.dto.DepositResultDTO;
-import edu.school21.SmartCal40.enums.ErrorMessage;
 import edu.school21.SmartCal40.models.DepositCalcModel;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,51 +11,45 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @AllArgsConstructor
 public class DepositController {
-    final DepositCalcModel depositCalcModel;
+    private final DepositCalcModel depositModel;
 
     @GetMapping("/deposit")
     public String getDepositPage() {
         return "deposit";
     }
 
+    /**
+     * Расчет доходности вклада
+     *
+     * @param summa             сумма вклада
+     * @param period            срок размещения (в месяцах или годах)
+     * @param termType          тип периода (месяцев/лет)
+     * @param percent           процентная ставка
+     * @param taxPercent        налоговая ставка
+     * @param capitalization    капитализация процентов (Нет/Ежемесячно/Ежеквартально/Ежегодно)
+     * @param periodPayment     периодичность выплат (Единовременно/Ежемесячно/Ежеквартально/Ежегодно)
+     * @param openDate          дата открытия вклада
+     * @param addition          ежемесячное пополнение (т.е. на какую сумму пополняет пользователь вклад раз в месяц)
+     * @param withdrawal        ежемесячное снятие (т.е. какую сумму пользователь снимает раз в месяц)
+     * @param model             модель для фронта (присутствует по-умолчанию)
+     * @return имя страницы (всегда deposit)
+     */
     @PostMapping("/deposit")
-    public String getMainPage(
+    public String getDepositResult(
             @RequestParam("summa") final String summa,
-            @RequestParam("amount-of-month") final String amountOfMonth,
+            @RequestParam("period") final String period,
             @RequestParam("term-type") final String termType,
             @RequestParam("percent") final String percent,
-            @RequestParam("capitalization-period") final String capitalizationPeriod,
-            @RequestParam("period-pay") final String periodPay,
-            @RequestParam("month-start") final String monthStart,
-            @RequestParam("additions") final String additions,
-            @RequestParam("withdrawal") final String withdrawal,
-            @RequestParam("sum-begin") final String sumBegin,
-            @RequestParam("result-percent") final String resultPercent,
             @RequestParam("tax-percent") final String taxPercent,
+            @RequestParam("capitalization") final String capitalization,
+            @RequestParam("period-payment") final String periodPayment,
+            @RequestParam("open-date") final String openDate,
+            @RequestParam("addition") final String addition,
+            @RequestParam("withdrawal") final String withdrawal,
             final Model model
     ) {
-        depositCalcModel.validateInputParameters(
-                summa,
-                amountOfMonth,
-                termType,
-                percent,
-                capitalizationPeriod,
-                periodPay,
-                monthStart,
-                additions,
-                withdrawal,
-                sumBegin,
-                resultPercent,
-                taxPercent
-        );
-
-        DepositResultDTO resultDTO = depositCalcModel.getResult();
-        if (resultDTO.getErrorMassage().equals(ErrorMessage.SUCCESS)) {
-            model.addAttribute("result", resultDTO);
-        } else {
-            model.addAttribute("result", new DepositResultDTO(true, resultDTO.getErrorMassage()));
-        }
-
+        //  валидация как в кредите
+//        depositModel.
         return "deposit";
     }
 }

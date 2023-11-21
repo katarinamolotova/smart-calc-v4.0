@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @AllArgsConstructor
 public class CreditController {
-    final CreditCalcModel creditModel;
+    private final CreditCalcModel creditModel;
 
     @GetMapping("/credit")
     public String getCreditPage() {
@@ -21,7 +21,7 @@ public class CreditController {
     }
 
     @PostMapping("/credit")
-    public String getMainPage(
+    public String getCreditResult(
             @RequestParam("summa") final String summa,
             @RequestParam("percent") final String percent,
             @RequestParam("period") final String period,
@@ -29,8 +29,8 @@ public class CreditController {
             @RequestParam("credit-type") final String creditType,
             final Model model
     ) {
-        ErrorMessage message = creditModel.calculate(creditType, summa, period, termType, percent);
-        if (message.equals(ErrorMessage.SUCCESS)) {
+        final ErrorMessage message = creditModel.calculate(creditType, summa, period, termType, percent);
+        if (message == ErrorMessage.SUCCESS) {
             model.addAttribute("result", creditModel.getResult());
         } else {
             model.addAttribute("result", new CreditResultDTO(true, message.getName()));

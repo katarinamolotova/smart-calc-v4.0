@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<!-- Заменить на enum ScreenType-->
+<header th:fragment="header">
+    <div class="header">
+        <div class="header-menu">
+            <div class="menu-item" th:classappend="${tab == 'main'} ? 'active'">
+                <a aria-current="page" href="/">Главная</a>
+            </div>
+            <div class="menu-item" th:classappend="${tab == 'credit'} ? 'active'">
+                <a aria-current="page" href="/credit">Кредитный калькулятор</a>
+            </div>
+            <div class="menu-item" th:classappend="${tab == 'deposit'} ? 'active'">
+                <a aria-current="page" href="/deposit">Депозитный калькулятор</a>
+            </div>
+            <div class="menu-item" th:classappend="${tab == 'about'} ? 'active'">
+                <a aria-current="page" href="/about">Справка</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+</body>
+</html>

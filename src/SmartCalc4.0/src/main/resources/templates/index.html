@@ -5,9 +5,13 @@
     <title>Calculator</title>
     <script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
 </head>
 <body>
 
+<header th:replace="~{fragments/header :: header}"></header>
+<br>
+<br>
 <div class="calc-form">
     <form action="/" method="post">
         <div class="block">

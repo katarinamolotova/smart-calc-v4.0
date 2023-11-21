@@ -1,6 +1,5 @@
 package edu.school21.SmartCal40.controllers;
 
-import edu.school21.SmartCal40.entities.HistoryEntity;
 import edu.school21.SmartCal40.models.BasicCalcModel;
 import edu.school21.SmartCal40.services.HistoryService;
 import lombok.AllArgsConstructor;
@@ -13,12 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @AllArgsConstructor
 public class MainController {
-    final BasicCalcModel calcModel;
-    final HistoryService service;
+    private final BasicCalcModel calcModel;
+    private final HistoryService service;
 
     @GetMapping("/")
     public String getMainPage() {
         return "index";
+    }
+
+    @GetMapping("/about")
+    public String getAboutPage() {
+        return "about";
     }
 
     @PostMapping("/")
