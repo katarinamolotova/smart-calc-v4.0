@@ -34,7 +34,7 @@ public class CreditController {
         if (message == ErrorMessage.SUCCESS) {
             model.addAttribute("result", creditModel.getResult());
         } else {
-            model.addAttribute("result", new CreditResultDTO(true, message.getName()));
+            model.addAttribute("result", new CreditResultDTO(true, message));
         }
         return "credit";
     }
