@@ -29,7 +29,8 @@ public class CreditController {
             @RequestParam("credit-type") final String creditType,
             final Model model
     ) {
-        final ErrorMessage message = creditModel.calculate(creditType, summa, period, termType, percent);
+        creditModel.validateInputParameters(summa, percent, period, termType, creditType);
+        final ErrorMessage message = creditModel.calculate();
         if (message == ErrorMessage.SUCCESS) {
             model.addAttribute("result", creditModel.getResult());
         } else {

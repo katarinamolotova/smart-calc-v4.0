@@ -1,13 +1,15 @@
 package edu.school21.SmartCal40.models;
 
+import edu.school21.SmartCal40.dto.CreditParametersDTO;
 import edu.school21.SmartCal40.dto.CreditResultDTO;
 import edu.school21.SmartCal40.enums.CreditType;
 import edu.school21.SmartCal40.enums.ErrorMessage;
 import edu.school21.SmartCal40.enums.TermType;
-import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Component
 public class CreditCalcModel {
@@ -18,53 +20,55 @@ public class CreditCalcModel {
   private Double overpay;
   private Double totalPayment;
   private ArrayList<Double> everyMothPay;
+  @Getter
+  private CreditParametersDTO startParameters = null;
 
-  public ErrorMessage calculate(
+  public void validateInputParameters(
           final String type,
           final String sum,
           final String amountOfMonth,
           final String termType,
           final String percent
   ) {
+    startParameters = new CreditParametersDTO(
+            type,
+            sum,
+            amountOfMonth,
+            termType,
+            percent
+    );
+  }
+
+  public ErrorMessage calculate() {
     overpay = 0.0;
     totalPayment = 0.0;
     everyMothPay = new ArrayList<>();
-    try {
-      everyMothPay(
-              CreditType.getCreditType(type),
-              Double.parseDouble(sum),
-              Integer.parseInt(amountOfMonth),
-              TermType.getTermType(termType),
-              Double.parseDouble(percent)
-      );
-    } catch (final NullPointerException e) {
+    if(Objects.isNull(startParameters)) {
       return ErrorMessage.ERROR_SOMETHING_WRONG;
-    } catch (final NumberFormatException e) {
-      return ErrorMessage.ERROR_WRONG_ARGUMENT;
+    } else if (startParameters.isBroken()) {
+      return startParameters.getErrorMessage();
+    } else {
+      everyMothPay(startParameters);
+      totalPayment();
+      overpay(startParameters.getSum());
+      return startParameters.getErrorMessage();
     }
-    totalPayment();
-    overpay(Double.parseDouble(sum));
-    return ErrorMessage.SUCCESS;
   }
 
-  private void everyMothPay(
-      final CreditType type,
-      final double sum,
-      final int amountOfMonth,
-      final TermType termType,
-      final double percent
-  ) {
-    double dynamicSum = sum;
+  private void everyMothPay(final CreditParametersDTO dto) {
+    double dynamicSum = dto.getSum();
     final int period =
-        (termType == TermType.MONTH) ? amountOfMonth : amountOfMonth * MONTHS_OF_YEAR;
-    final double newPercent = percent / MAX_PERCENT / MONTHS_OF_YEAR;
+        (dto.getTermType() == TermType.MONTH)
+                ? dto.getAmountOfMonth()
+                : dto.getAmountOfMonth() * MONTHS_OF_YEAR;
+    final double newPercent = dto.getPercent() / MAX_PERCENT / MONTHS_OF_YEAR;
 
     for (int i = 0; i < period; i++) {
       final double result;
-      if (type == CreditType.ANNUITY) {
-        result = sum * (newPercent / (1. - Math.pow(1. + newPercent, (-1. * period))));
+      if (dto.getType() == CreditType.ANNUITY) {
+        result = dto.getSum() * (newPercent / (1. - Math.pow(1. + newPercent, (-1. * period))));
       } else {
-        result = sum / period + dynamicSum * newPercent;
+        result = dto.getSum() / period + dynamicSum * newPercent;
       }
       everyMothPay.add(Math.ceil(result * SCALE) / SCALE);
       dynamicSum -= everyMothPay.get(i);

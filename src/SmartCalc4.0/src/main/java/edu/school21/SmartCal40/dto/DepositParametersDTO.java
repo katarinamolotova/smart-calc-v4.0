@@ -15,8 +15,6 @@ public class DepositParametersDTO {
     int monthStart;
     double additions;
     double withdrawal;
-    double sumBegin;
-    double resultPercent;
     double taxPercent;
     boolean isBroken = false;
     ErrorMessage errorMessage = ErrorMessage.SUCCESS;
@@ -31,8 +29,6 @@ public class DepositParametersDTO {
             final String monthStart,
             final String additions,
             final String withdrawal,
-            final String sumBegin,
-            final String resultPercent,
             final String taxPercent
     ) {
         try {
@@ -45,8 +41,6 @@ public class DepositParametersDTO {
             this.monthStart = Integer.parseInt(monthStart);
             this.additions = Double.parseDouble(additions);
             this.withdrawal = Double.parseDouble(withdrawal) * -1;
-            this.sumBegin = Double.parseDouble(sumBegin);
-            this.resultPercent = Double.parseDouble(resultPercent);
             this.taxPercent = Double.parseDouble(taxPercent);
         } catch (NullPointerException e) {
             this.errorMessage = ErrorMessage.ERROR_SOMETHING_WRONG;
