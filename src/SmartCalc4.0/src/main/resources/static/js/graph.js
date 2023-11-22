@@ -1,43 +1,49 @@
 const ctx = document.getElementById('graph').getContext('2d');
+let myChart = new Chart(ctx, null);
 
-//  проверка на галочку?
-// document
-//   .getElementById("calculate")
-//   .addEventListener("click", function () {
-//
-//   }
-
-const myChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн'],
-    datasets: [
-      {
-        label: '',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+function printGraph(minX, maxX, xvalues, yvalues) {
+  const field = document.getElementById("expression");
+  myChart.clear();
+  let data = getData(xvalues, yvalues);
+  myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: xvalues,
+      datasets: [{
+        label: field.value,
+        data: yvalues,
+        backgroundColor: 'rgba(4,170,109,0.16)',
+        borderColor: 'rgb(4,170,109)',
         borderWidth: 1,
       },
-    ],
-  },
-  options: {
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
       ],
     },
-  },
-});
+    options: {
+      legend: {
+        display: false
+      },
+      plugins: {
+        tooltip: {
+          enabled: false
+        }
+      },
+      scales: {
+        yAxes: [
+          {
+            ticks: {
+              beginAtZero: false,
+            },
+          },
+        ],
+      },
+    },
+  });
+}
 
 function getData(xvalues, yvalues) {
   let arr = [];
   for (let i = 0; i < xvalues.length; i++) {
-    arr.push({x:xvalues[i], y: yvalues[i]})
+    arr.push({x:xvalues[i], y:yvalues[i]})
   }
   return arr;
 }

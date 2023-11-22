@@ -8,14 +8,14 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}">
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
 </head>
-<body>
+<body th:attr="onload=|printGraph('${minX}', '${maxX}', '${valuesX}', '${valuesY}')|">
 
 <header th:replace="~{fragments/header :: header}"></header>
 <br>
 <br>
 <div class="calc-form">
     <div class="main">
-    <form action="/" method="post">
+    <form id="calculator" action="/" method="post">
 
         <label>
             <input class="max-input"
@@ -77,31 +77,36 @@
         </div>
 
         </div>
-            <button id="calculate" class="std-button long-button equal" type="submit">=</button>
+            <button id="calculate"
+                    class="std-button long-button equal"
+                    type="submit">=</button>
         </div>
 
         <div class="block">
             <label>
-                <input type="checkbox" name="checkbox"> График
+                <input id="checkbox"
+                       type="checkbox"
+                       name="checkbox"
+                       th:checked="${isGraph}">
+                График
             </label>
 
-            <label id="x">
-                х <input name="value" type="number" value=0 th:value="${value}">
+            <label id="x" th:style="${isGraph} ? 'display: none'">
+                х <input name="value" type="number"
+                         value=0 th:value="${value}">
             </label>
 
-            <!--   th:value="${minX}" -->
-            <label id="min-x" style="display: none">
+            <label id="min-x" th:style="${not isGraph} ? 'display: none'">
                 min <input name="min-x"
                            type="number"
-                           value=-10
+                           value=-10 th:value="${minX}"
                            min="-1000000" max="1000000">
             </label>
 
-<!--            th:value="${maxX}"-->
-            <label id="max-x" style="display: none">
+            <label id="max-x" th:style="${not isGraph} ? 'display: none'">
                 max <input name="max-x"
                            type="number"
-                           value=10
+                           value=10 th:value="${maxX}"
                            min="-1000000" max="1000000">
             </label>
         </div>
@@ -110,6 +115,7 @@
             <canvas id="graph"></canvas>
         </div>
     </form>
+
     </div>
 
     <form class="history" th:if="${not #lists.isEmpty(histories)}" action="/delete-history" method="get">

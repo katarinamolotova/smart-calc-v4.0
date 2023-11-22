@@ -1,3 +1,5 @@
+const graphUrl = "http://localhost:8080/graph"
+
 function drawElement(a) {
   const field = document.getElementById("expression");
   field.value = field.value + a;
