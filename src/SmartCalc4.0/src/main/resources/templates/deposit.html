@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Deposit</title>
+    <script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
 </head>
-<body>
+<body th:attr="onload=|showAlert(${result.isBroken}, '${result.errorMassage.name}')|">
 
 <header th:replace="~{fragments/header :: header}"></header>
 <br>
@@ -32,9 +33,9 @@
             Срок размещения:
             <br>
             <input style="width: 73%;" id="period" name="period" type="number" min="1" max="720" value="12" th:value="${params.amountOfMonth}">
-            <select name="term-type" th:value="${params.termType.name}">
-                <option>Месяцев</option>
-                <option>Лет</option>
+            <select name="term-type">
+                <option value="Месяцев" th:selected="${params.termType.name} == 'Месяцев'">Месяцев</option>
+                <option value="Лет" th:selected="${params.termType.name} == 'Лет'">Лет</option>
             </select>
         </label>
     </div>
@@ -57,10 +58,14 @@
         <label>
             Капитализация:
             <select class="full-select" name="capitalization">
-                <option value="Нет" th:selected="${params.periodPay.name} == 'Нет'">Нет</option>
-                <option value="Ежемесячно" th:selected="${params.periodPay.name} == 'Ежемесячно'">Ежемесячно</option>
-                <option value="Ежеквартально" th:selected="${params.periodPay.name} == 'Ежеквартально'">Ежеквартально</option>
-                <option value="Ежегодно" th:selected="${params.periodPay.name} == 'Ежегодно'">Ежегодно</option>
+                <option value="Нет"
+                        th:selected="${params.capitalizationPeriod.name} == 'Нет'">Нет</option>
+                <option value="Ежемесячно"
+                        th:selected="${params.capitalizationPeriod.name} == 'Ежемесячно'">Ежемесячно</option>
+                <option value="Ежеквартально"
+                        th:selected="${params.capitalizationPeriod.name} == 'Ежеквартально'">Ежеквартально</option>
+                <option value="Ежегодно"
+                        th:selected="${params.capitalizationPeriod.name} == 'Ежегодно'">Ежегодно</option>
             </select>
         </label>
     </div>

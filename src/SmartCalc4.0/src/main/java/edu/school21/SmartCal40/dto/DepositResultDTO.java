@@ -1,6 +1,6 @@
 package edu.school21.SmartCal40.dto;
 
-import edu.school21.SmartCal40.enums.ErrorMessage;
+import edu.school21.SmartCal40.enums.Status;
 import lombok.Getter;
 
 @Getter
@@ -9,7 +9,7 @@ public class DepositResultDTO {
     private double resultPercent;
     private double sumTax;
     private boolean isBroken = false;
-    private ErrorMessage errorMassage = ErrorMessage.SUCCESS;
+    private Status errorMassage = Status.SUCCESS;
 
     public DepositResultDTO(
             final double sumAtTheEnd,
@@ -23,7 +23,7 @@ public class DepositResultDTO {
 
     public DepositResultDTO(
             final boolean error,
-            final ErrorMessage errorMassage
+            final Status errorMassage
     ) {
         this.isBroken = error;
         this.errorMassage = errorMassage;

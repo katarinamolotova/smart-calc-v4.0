@@ -4,6 +4,7 @@ import edu.school21.SmartCal40.entities.HistoryEntity;
 import edu.school21.SmartCal40.models.BasicCalcModel;
 import edu.school21.SmartCal40.services.HistoryService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @AllArgsConstructor
 public class MainController {
@@ -25,34 +27,43 @@ public class MainController {
 
     @GetMapping("/")
     public String getMainPage(final Model model) {
-        setBaseAttributeToModel("0", "",  service.loadHistory(), model);
+        setBaseAttributeToModel("0", "",  service.loadLastTenRecordsOfHistory(), model);
         return "index";
     }
 
     @GetMapping("/delete-history")
     public String deleteHistory() {
+
         service.deleteAll();
         return "redirect:/";
     }
 
-    // TODO обработка ошибок
     @PostMapping("/")
     public String getResult(
             @RequestParam("expression") final String expression,
-            @RequestParam("checkbox") final boolean isGraph,
+            @RequestParam(name = "checkbox", required = false) final boolean isGraph,
             @RequestParam("value") final String value,
             @RequestParam("min-x") final String minX,
             @RequestParam("max-x") final String maxX,
             final Model model
     ) {
+        log.info("Вычисление выражения {}", expression);
         service.save(expression);
-        final Iterable<HistoryEntity> histories = service.loadHistory();
-        if (isGraph) {
-            setBaseAttributeToModel(value, expression, histories, model);
-            setResultForGraph(expression, minX, maxX, model);
-        } else {
-            final String result = calcModel.getResult(expression, value);
-            setBaseAttributeToModel(value, result, histories, model);
+        final List<String> histories = service.loadLastTenRecordsOfHistory();
+
+        try {
+            if (isGraph) {
+                setBaseAttributeToModel(value, expression, histories, model);
+                setResultForGraph(expression, minX, maxX, model);
+                log.info("Результатом является график, где min-x = {}, max-x = {}", minX, maxX);
+            } else {
+                final String result = calcModel.getResult(expression, value);
+                setBaseAttributeToModel(value, result, histories, model);
+                log.info("Результат вычислений {}", result);
+            }
+        } catch (final Exception e) {
+            setBaseAttributeToModel(value, e.getMessage(), histories, model);
+            log.warn("Ошибка во время вычисления: {}", e.getMessage());
         }
 
         model.addAttribute("isGraph", isGraph);
@@ -75,7 +86,7 @@ public class MainController {
     private void setBaseAttributeToModel(
             final String xValue,
             final String result,
-            final Iterable<HistoryEntity> histories,
+            final List<String> histories,
             final Model model
     ) {
         model.addAttribute("value", xValue);

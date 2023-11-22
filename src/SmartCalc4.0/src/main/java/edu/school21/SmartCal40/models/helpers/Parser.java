@@ -1,7 +1,7 @@
 package edu.school21.SmartCal40.models.helpers;
 
 import edu.school21.SmartCal40.enums.BinaryOperationType;
-import edu.school21.SmartCal40.enums.ErrorMessage;
+import edu.school21.SmartCal40.enums.Status;
 import edu.school21.SmartCal40.enums.UnaryOperationType;
 import javafx.util.Pair;
 import lombok.AllArgsConstructor;
@@ -52,7 +52,7 @@ public class Parser {
       this.polishNotation.add(new Pair<>("num", number.doubleValue()));
       isUnary = false;
     } catch (ParseException e) {
-      throw new RuntimeException(ErrorMessage.ERROR_SOMETHING_WRONG.getName());
+      throw new RuntimeException(Status.ERROR_SOMETHING_WRONG.getName());
     }
     return index + (shiftNumber(str) - 1);
   }
@@ -87,7 +87,7 @@ public class Parser {
       }
       isUnary = true;
     } else if (!Objects.equals(op, " ")) {
-      throw new IllegalArgumentException(ErrorMessage.ERROR_WRONG_ARGUMENT.getName());
+      throw new IllegalArgumentException(Status.ERROR_WRONG_ARGUMENT.getName());
     }
     return index + shiftOperation(op);
   }

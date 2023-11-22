@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Credit</title>
+    <script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/form.css" th:href="@{/css/form.css}">
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
 </head>
-<body>
+<body th:attr="onload=|showAlert(${result.isBroken}, '${result.errorMassage.name}')|">
 
 <header th:replace="~{fragments/header :: header}"></header>
 <br>
@@ -54,8 +55,8 @@
                    value="12"
                    th:value="${params.amountOfMonth}">
             <select name="term-type">
-                <option>Месяцев</option>
-                <option>Лет</option>
+                <option value="Месяцев" th:selected="${params.termType.name} == 'Месяцев'">Месяцев</option>
+                <option value="Лет" th:selected="${params.termType.name} == 'Лет'">Лет</option>
             </select>
         </label>
     </div>
@@ -85,7 +86,7 @@
     </div>
 </form>
 <br>
-§
+
 <div class="form" th:if="${result}">
     <div>
         <label>

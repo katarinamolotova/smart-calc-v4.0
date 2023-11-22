@@ -2,31 +2,38 @@ package edu.school21.SmartCal40.services;
 
 import edu.school21.SmartCal40.entities.HistoryEntity;
 import edu.school21.SmartCal40.repositories.HistoryRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @Service
-@AllArgsConstructor
-public class HistoryService {
-    private final HistoryRepository repository;
+public record HistoryService(HistoryRepository repository) {
 
     public void save(final String entity) {
-        HistoryEntity tmp = getEmptyEntity();
+        if (entity == null || entity.isEmpty()) {
+            return;
+        }
+        final HistoryEntity tmp = getEmptyEntity();
         tmp.setData(entity);
         tmp.setDateTime(LocalDateTime.now());
         repository.save(tmp);
     }
 
-    public List<HistoryEntity> loadHistory() {
-        List<HistoryEntity> result = new ArrayList<>();
-        repository.findAll().forEach(result::add);
-        return result;
+    public List<String> loadLastTenRecordsOfHistory() {
+        return StreamSupport.stream(repository.findAll().spliterator(), false)
+                .sorted(Comparator.comparing(HistoryEntity::getDateTime).reversed())
+                .map(HistoryEntity::getData)
+                .distinct()
+                .limit(10)
+                .collect(Collectors.toList());
     }
 
     public void deleteAll() {
@@ -35,16 +42,5 @@ public class HistoryService {
 
     public static HistoryEntity getEmptyEntity() {
         return new HistoryEntity();
-    }
-}
-
-class HistoryComparator implements Comparator<HistoryEntity>, Predicate<HistoryEntity> {
-    public int compare(HistoryEntity a, HistoryEntity b){
-        return a.getData().compareTo(b.getData());
-    }
-
-    @Override
-    public boolean test(HistoryEntity historyEntity) {
-        return false;
     }
 }

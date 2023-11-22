@@ -8,11 +8,12 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}">
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
 </head>
-<body th:attr="onload=|printGraph('${minX}', '${maxX}', '${valuesX}', '${valuesY}')|">
+<body th:attr="onload=|printGraph(${minX}, ${maxX}, ${valuesX}, ${valuesY})|">
 
 <header th:replace="~{fragments/header :: header}"></header>
 <br>
 <br>
+
 <div class="calc-form">
     <div class="main">
     <form id="calculator" action="/" method="post">
@@ -122,11 +123,11 @@
         <div class="column">
             <div class="row"
                  th:each="history : ${histories}"
-                 th:attr="ondblclick=|historyElementDbClick('${history.data}')|"
-                 th:text="${history.data}">
+                 th:attr="ondblclick=|historyElementDbClick('${history}')|"
+                 th:text="${history}">
             </div>
         </div>
-        <button class="history-btn" type="submit">Удалить историю</button>
+        <button class="history-btn" type="submit">Сбросить</button>
     </form>
 </div>
 
