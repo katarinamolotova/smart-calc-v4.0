@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Calculator</title>
     <script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}">
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
 </head>
@@ -13,15 +14,18 @@
 <br>
 <br>
 <div class="calc-form">
+    <div class="main">
     <form action="/" method="post">
-        <div class="block">
-            <label>
-                <input id="expression" name="expression" readonly type="text" th:value="${result}">
-            </label>
-            <label>
-                <input id="value" name="value" type="number" value=0 th:value="${value}">
-            </label>
-        </div>
+
+        <label>
+            <input class="max-input"
+                   id="expression"
+                   name="expression"
+                   readonly
+                   type="text"
+                   maxlength="256"
+                   th:value="${result}">
+        </label>
 
         <div>
             <button class="std-button" type="button" onclick="drawElement('(')">(</button>
@@ -53,7 +57,7 @@
             <button class="std-button" type="button" onclick="drawElement('+')">+</button>
         </div>
 
-        <div style="display: flex">
+        <div style="display: flex; width: max-content;">
         <div style="margin-right: 4px;">
         <div>
             <button class="std-button" type="button" onclick="drawElement('tan(')">tan</button>
@@ -73,10 +77,55 @@
         </div>
 
         </div>
-            <button class="std-button long-button equal" type="submit">=</button>
+            <button id="calculate" class="std-button long-button equal" type="submit">=</button>
+        </div>
+
+        <div class="block">
+            <label>
+                <input type="checkbox" name="checkbox"> График
+            </label>
+
+            <label id="x">
+                х <input name="value" type="number" value=0 th:value="${value}">
+            </label>
+
+            <!--   th:value="${minX}" -->
+            <label id="min-x" style="display: none">
+                min <input name="min-x"
+                           type="number"
+                           value=-10
+                           min="-1000000" max="1000000">
+            </label>
+
+<!--            th:value="${maxX}"-->
+            <label id="max-x" style="display: none">
+                max <input name="max-x"
+                           type="number"
+                           value=10
+                           min="-1000000" max="1000000">
+            </label>
+        </div>
+
+        <div>
+            <canvas id="graph"></canvas>
         </div>
     </form>
+    </div>
+
+    <form class="history" th:if="${not #lists.isEmpty(histories)}" action="/delete-history" method="get">
+        <div class="column">
+            <div class="row"
+                 th:each="history : ${histories}"
+                 th:attr="ondblclick=|historyElementDbClick('${history.data}')|"
+                 th:text="${history.data}">
+            </div>
+        </div>
+        <button class="history-btn" type="submit">Удалить историю</button>
+    </form>
 </div>
+
+<script src="../static/js/graph.js" th:src="@{/js/graph.js}"></script>
+<script src="../static/js/listeners.js" th:src="@{/js/listeners.js}"></script>
 
 </body>
 </html>
