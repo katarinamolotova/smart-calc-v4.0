@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+    <script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
+</head>
+<body th:attr="onload=|printGraph('${minX}', '${maxX}', '${valuesX}', '${valuesY}')|">
+
+<header th:replace="~{fragments/header :: header}"></header>
+<br>
+<br>
+<div class="calc-form">
+    <div class="main">
+    <form id="calculator" action="/" method="post">
+
+        <label>
+            <input class="max-input"
+                   id="expression"
+                   name="expression"
+                   readonly
+                   type="text"
+                   maxlength="256"
+                   th:value="${result}">
+        </label>
+
+        <div>
+            <button class="std-button" type="button" onclick="drawElement('(')">(</button>
+            <button class="std-button" type="button" onclick="drawElement(')')">)</button>
+            <button class="std-button" type="button" onclick="drawElement('e')">e</button>
+            <button class="std-button" type="button" onclick="deleteElement(false)">AC</button>
+            <button class="std-button" type="button" onclick="deleteElement(true)">DEL</button>
+            <button class="std-button" type="button" onclick="drawElement('*')">*</button>
+            <button class="std-button" type="button" onclick="drawElement('/')">/</button>
+        </div>
+
+        <div>
+            <button class="std-button" type="button" onclick="drawElement('cos(')">cos</button>
+            <button class="std-button" type="button" onclick="drawElement('acos(')">acos</button>
+            <button class="std-button" type="button" onclick="drawElement('x')">x</button>
+            <button class="std-button" type="button" onclick="drawElement('7')">7</button>
+            <button class="std-button" type="button" onclick="drawElement('8')">8</button>
+            <button class="std-button" type="button" onclick="drawElement('9')">9</button>
+            <button class="std-button" type="button" onclick="drawElement('-')">-</button>
+        </div>
+
+        <div>
+            <button class="std-button" type="button" onclick="drawElement('sin(')">sin</button>
+            <button class="std-button" type="button" onclick="drawElement('asin(')">asin</button>
+            <button class="std-button" type="button" onclick="drawElement('^')">^</button>
+            <button class="std-button" type="button" onclick="drawElement('4')">4</button>
+            <button class="std-button" type="button" onclick="drawElement('5')">5</button>
+            <button class="std-button" type="button" onclick="drawElement('6')">6</button>
+            <button class="std-button" type="button" onclick="drawElement('+')">+</button>
+        </div>
+
+        <div style="display: flex; width: max-content;">
+        <div style="margin-right: 4px;">
+        <div>
+            <button class="std-button" type="button" onclick="drawElement('tan(')">tan</button>
+            <button class="std-button" type="button" onclick="drawElement('atan(')">atan</button>
+            <button class="std-button" type="button" onclick="drawElement('mod(')">mod</button>
+            <button class="std-button" type="button" onclick="drawElement('1')">1</button>
+            <button class="std-button" type="button" onclick="drawElement('2')">2</button>
+            <button class="std-button" type="button" onclick="drawElement('3')">3</button>
+        </div>
+
+        <div>
+            <button class="std-button" type="button" onclick="drawElement('ln(')">ln</button>
+            <button class="std-button" type="button" onclick="drawElement('log(')">log</button>
+            <button class="std-button" type="button" onclick="drawElement('sqrt(')">sqrt</button>
+            <button class="std-button wide-button" type="button" onclick="drawElement('0')">0</button>
+            <button class="std-button" type="button" onclick="drawElement('.')">.</button>
+        </div>
+
+        </div>
+            <button id="calculate"
+                    class="std-button long-button equal"
+                    type="submit">=</button>
+        </div>
+
+        <div class="block">
+            <label>
+                <input id="checkbox"
+                       type="checkbox"
+                       name="checkbox"
+                       th:checked="${isGraph}">
+                График
+            </label>
+
+            <label id="x" th:style="${isGraph} ? 'display: none'">
+                х <input name="value" type="number"
+                         value=0 th:value="${value}">
+            </label>
+
+            <label id="min-x" th:style="${not isGraph} ? 'display: none'">
+                min <input name="min-x"
+                           type="number"
+                           value=-10 th:value="${minX}"
+                           min="-1000000" max="1000000">
+            </label>
+
+            <label id="max-x" th:style="${not isGraph} ? 'display: none'">
+                max <input name="max-x"
+                           type="number"
+                           value=10 th:value="${maxX}"
+                           min="-1000000" max="1000000">
+            </label>
+        </div>
+
+        <div>
+            <canvas id="graph"></canvas>
+        </div>
+    </form>
+
+    </div>
+
+    <form class="history" th:if="${not #lists.isEmpty(histories)}" action="/delete-history" method="get">
+        <div class="column">
+            <div class="row"
+                 th:each="history : ${histories}"
+                 th:attr="ondblclick=|historyElementDbClick('${history.data}')|"
+                 th:text="${history.data}">
+            </div>
+        </div>
+        <button class="history-btn" type="submit">Удалить историю</button>
+    </form>
+</div>
+
+<script src="../static/js/graph.js" th:src="@{/js/graph.js}"></script>
+<script src="../static/js/listeners.js" th:src="@{/js/listeners.js}"></script>
+
+</body>
+</html>

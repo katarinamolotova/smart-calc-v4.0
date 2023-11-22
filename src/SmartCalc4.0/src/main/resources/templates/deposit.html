@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deposit</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/form.css" th:href="@{/css/form.css}">
+    <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/header :: header}"></header>
+<br>
+<br>
+<div class="content">
+
+<form class="form" action="/deposit" method="post">
+    <div>
+        <label>
+            Сумма вклада (руб.):
+            <input id="summa"
+                   name="summa"
+                   type="number"
+                   min="0"
+                   value="1000000"
+                   th:value="${params.summa}">
+        </label>
+    </div>
+
+
+    <div>
+        <label>
+            Срок размещения:
+            <br>
+            <input style="width: 73%;" id="period" name="period" type="number" min="1" max="720" value="12" th:value="${params.amountOfMonth}">
+            <select name="term-type" th:value="${params.termType.name}">
+                <option>Месяцев</option>
+                <option>Лет</option>
+            </select>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Процентная ставка (%):
+            <input id="percent" name="percent" type="number" min="0" max="100" value="5" th:value="${params.percent}">
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Налоговая ставка (%):
+            <input id="tax-percent" name="tax-percent" type="number" min="0" max="100" value="0" th:value="${params.taxPercent}">
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Капитализация:
+            <select class="full-select" name="capitalization">
+                <option value="Нет" th:selected="${params.periodPay.name} == 'Нет'">Нет</option>
+                <option value="Ежемесячно" th:selected="${params.periodPay.name} == 'Ежемесячно'">Ежемесячно</option>
+                <option value="Ежеквартально" th:selected="${params.periodPay.name} == 'Ежеквартально'">Ежеквартально</option>
+                <option value="Ежегодно" th:selected="${params.periodPay.name} == 'Ежегодно'">Ежегодно</option>
+            </select>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Периодичность:
+            <select class="full-select"
+                    name="period-payment">
+                <option value="Единовременно" th:selected="${params.periodPay.name} == 'Единовременно'">Единовременно</option>
+                <option value="Ежемесячно" th:selected="${params.periodPay.name} == 'Ежемесячно'">Ежемесячно</option>
+                <option value="Ежеквартально" th:selected="${params.periodPay.name} == 'Ежеквартально'">Ежеквартально</option>
+                <option value="Ежегодно" th:selected="${params.periodPay.name} == 'Ежегодно'">Ежегодно</option>
+            </select>
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Дата открытия:
+            <input id="open-date"
+                   name="open-date"
+                   type="date"
+                   th:value="${params.start}">
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Ежемесячное пополнение (руб.):
+            <input name="addition"
+                   type="number"
+                   min="0"
+                   value="0"
+                   th:value="${params.additions}">
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Ежемесячное снятие (руб.):
+            <input name="withdrawal" type="number" min="0" value="0" th:value="${params.withdrawal}">
+        </label>
+    </div>
+
+    <div class="block">
+        <button type="submit">Рассчитать</button>
+    </div>
+</form>
+
+<div class="form" th:if="${result}">
+    <div>
+        <label>
+            Сумма на вкладе к концу срока (руб.):
+            <input readonly name="result-summa" type="number" min="0" value="0" th:value="${result.sumAtTheEnd}">
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Начисленные проценты (руб.):
+            <input readonly name="result-percent" type="number" min="0" value="0" th:value="${result.resultPercent}">
+        </label>
+    </div>
+
+    <div>
+        <label>
+            Сумма налога (руб.):
+            <input readonly name="result-tax" type="number" min="0" value="0" th:value="${result.sumTax}">
+        </label>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
