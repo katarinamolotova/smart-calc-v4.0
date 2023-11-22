@@ -13,11 +13,16 @@
 <br>
 <div class="content">
 
-<form class="form" action="/deposit">
+<form class="form" action="/deposit" method="post">
     <div>
         <label>
             Сумма вклада (руб.):
-            <input id="summa" name="summa" type="number" min="0" value="1000000" th:value="${params.summa}">
+            <input id="summa"
+                   name="summa"
+                   type="number"
+                   min="0"
+                   value="1000000"
+                   th:value="${params.summa}">
         </label>
     </div>
 
@@ -51,11 +56,11 @@
     <div>
         <label>
             Капитализация:
-            <select class="full-select" name="capitalization" th:value="${params.capitalizationPeriod.name}">
-                <option>Нет</option>
-                <option>Ежемесячно</option>
-                <option>Ежеквартально</option>
-                <option>Ежегодно</option>
+            <select class="full-select" name="capitalization">
+                <option value="Нет" th:selected="${params.periodPay.name} == 'Нет'">Нет</option>
+                <option value="Ежемесячно" th:selected="${params.periodPay.name} == 'Ежемесячно'">Ежемесячно</option>
+                <option value="Ежеквартально" th:selected="${params.periodPay.name} == 'Ежеквартально'">Ежеквартально</option>
+                <option value="Ежегодно" th:selected="${params.periodPay.name} == 'Ежегодно'">Ежегодно</option>
             </select>
         </label>
     </div>
@@ -63,11 +68,12 @@
     <div>
         <label>
             Периодичность:
-            <select class="full-select" name="period-payment" th:value="${params.periodPay.name}">
-                <option>Единовременно</option>
-                <option>Ежемесячно</option>
-                <option>Ежеквартально</option>
-                <option>Ежегодно</option>
+            <select class="full-select"
+                    name="period-payment">
+                <option value="Единовременно" th:selected="${params.periodPay.name} == 'Единовременно'">Единовременно</option>
+                <option value="Ежемесячно" th:selected="${params.periodPay.name} == 'Ежемесячно'">Ежемесячно</option>
+                <option value="Ежеквартально" th:selected="${params.periodPay.name} == 'Ежеквартально'">Ежеквартально</option>
+                <option value="Ежегодно" th:selected="${params.periodPay.name} == 'Ежегодно'">Ежегодно</option>
             </select>
         </label>
     </div>
@@ -75,14 +81,21 @@
     <div>
         <label>
             Дата открытия:
-            <input id="open-date" name="open-date" type="date" th:value="${params.start}">
+            <input id="open-date"
+                   name="open-date"
+                   type="date"
+                   th:value="${params.start}">
         </label>
     </div>
 
     <div>
         <label>
             Ежемесячное пополнение (руб.):
-            <input name="addition" type="number" min="0" value="0" th:value="${params.additions}">
+            <input name="addition"
+                   type="number"
+                   min="0"
+                   value="0"
+                   th:value="${params.additions}">
         </label>
     </div>
 
@@ -98,25 +111,25 @@
     </div>
 </form>
 
-<div class="form">
+<div class="form" th:if="${result}">
     <div>
         <label>
             Сумма на вкладе к концу срока (руб.):
-            <input readonly name="result-summa" type="number" min="0" value="0">
+            <input readonly name="result-summa" type="number" min="0" value="0" th:value="${result.sumAtTheEnd}">
         </label>
     </div>
 
     <div>
         <label>
             Начисленные проценты (руб.):
-            <input readonly name="result-percent" type="number" min="0" value="0">
+            <input readonly name="result-percent" type="number" min="0" value="0" th:value="${result.resultPercent}">
         </label>
     </div>
 
     <div>
         <label>
             Сумма налога (руб.):
-            <input readonly name="result-tax" type="number" min="0" value="0">
+            <input readonly name="result-tax" type="number" min="0" value="0" th:value="${result.sumTax}">
         </label>
     </div>
 </div>

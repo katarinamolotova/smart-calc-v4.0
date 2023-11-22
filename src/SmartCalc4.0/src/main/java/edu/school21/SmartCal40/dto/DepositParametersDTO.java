@@ -5,6 +5,7 @@ import edu.school21.SmartCal40.enums.TermType;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 @Getter
@@ -42,10 +43,10 @@ public class DepositParametersDTO {
             this.percent = Double.parseDouble(percent);
             this.capitalizationPeriod = PeriodType.getPeriodType(capitalizationPeriod);
             this.periodPay = PeriodType.getPeriodType(periodPay);
-            this.monthStart = Integer.parseInt(monthStart);
             this.start = LocalDate.parse(monthStart, DateTimeFormatter.ISO_LOCAL_DATE);
+            this.monthStart = this.start.getMonthValue();
             this.additions = Double.parseDouble(additions);
-            this.withdrawal = Double.parseDouble(withdrawal) * -1;
+            this.withdrawal = Double.parseDouble(withdrawal);
             this.taxPercent = Double.parseDouble(taxPercent);
         } catch (NullPointerException e) {
             this.errorMessage = ErrorMessage.ERROR_SOMETHING_WRONG;

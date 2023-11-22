@@ -21,6 +21,7 @@ public class DepositCalcModel {
   @Getter
   private DepositParametersDTO startParameters = null;
   private double result;
+  private double resultPercent;
   private double intermediateSum;
   private double tempPercent;
   private double sum;
@@ -60,9 +61,13 @@ public class DepositCalcModel {
       );
 
     } else if(!startParameters.isBroken()) {
+      resultPercent = resultPercent(startParameters);
+      sumTax(startParameters);
+      sumAtTheEnd(startParameters);
+
       return new DepositResultDTO(
               sumAtTheEnd(startParameters),
-              resultPercent(startParameters),
+              resultPercent,
               sumTax(startParameters)
       );
     }
@@ -86,7 +91,7 @@ public class DepositCalcModel {
       checkCapitalisation(dto.getCapitalizationPeriod());
       checkPeriodPay(dto.getPeriodPay());
 
-      final double expression = (intermediateSum + dto.getAdditions() - dto.getWithdrawal())
+      final double expression = (intermediateSum + dto.getAdditions() - dto.getWithdrawal() * -1)
                                 / MAX_PERCENT
                                 * dto.getPercent()
                                 * daysInMonth
@@ -98,14 +103,17 @@ public class DepositCalcModel {
   }
 
   private double sumAtTheEnd(final DepositParametersDTO dto) {
-    double result = dto.getSumma() + dto.getPercent();
-    result += dto.getAdditions();
-    result += dto.getWithdrawal();
+    double result = dto.getSumma() + resultPercent;
+    final int period = dto.getTermType() == TermType.MONTH
+                          ? dto.getAmountOfMonth()
+                          : dto.getAmountOfMonth() * MONTHS_OF_YEAR;
+    result += dto.getAdditions() * period;
+    result -= dto.getWithdrawal() * period;
     return Math.ceil(result * SCALE) / SCALE;
   }
 
   private double sumTax(final DepositParametersDTO dto) {
-    final double result = dto.getPercent() * ( dto.getTaxPercent() / MAX_PERCENT);
+    final double result = resultPercent * ( dto.getTaxPercent() / MAX_PERCENT);
     return Math.ceil(result * SCALE) / SCALE;
   }
 

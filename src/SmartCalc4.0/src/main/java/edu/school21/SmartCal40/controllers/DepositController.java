@@ -68,7 +68,7 @@ public class DepositController {
         );
 
         DepositResultDTO resultDTO = depositModel.getResult();
-        model.addAttribute("param", depositModel.getStartParameters());
+        model.addAttribute("params", depositModel.getStartParameters());
         if (resultDTO.getErrorMassage().equals(ErrorMessage.SUCCESS)) {
             model.addAttribute("result", resultDTO);
         } else {
