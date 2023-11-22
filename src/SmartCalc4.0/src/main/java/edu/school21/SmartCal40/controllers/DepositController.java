@@ -1,5 +1,8 @@
 package edu.school21.SmartCal40.controllers;
 
+import edu.school21.SmartCal40.dto.DepositParametersDTO;
+import edu.school21.SmartCal40.dto.DepositResultDTO;
+import edu.school21.SmartCal40.enums.ErrorMessage;
 import edu.school21.SmartCal40.models.DepositCalcModel;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,7 +17,10 @@ public class DepositController {
     private final DepositCalcModel depositModel;
 
     @GetMapping("/deposit")
-    public String getDepositPage() {
+    public String getDepositPage(
+            final Model model
+    ) {
+        model.addAttribute("params", new DepositParametersDTO());
         return "deposit";
     }
 
@@ -48,8 +54,26 @@ public class DepositController {
             @RequestParam("withdrawal") final String withdrawal,
             final Model model
     ) {
-        //  валидация как в кредите
-//        depositModel.
+        depositModel.validateInputParameters(
+                summa,
+                period,
+                termType,
+                percent,
+                capitalization,
+                periodPayment,
+                openDate,
+                addition,
+                withdrawal,
+                taxPercent
+        );
+
+        DepositResultDTO resultDTO = depositModel.getResult();
+        model.addAttribute("param", depositModel.getStartParameters());
+        if (resultDTO.getErrorMassage().equals(ErrorMessage.SUCCESS)) {
+            model.addAttribute("result", resultDTO);
+        } else {
+            model.addAttribute("result", new DepositResultDTO(true, resultDTO.getErrorMassage()));
+        }
         return "deposit";
     }
 }
