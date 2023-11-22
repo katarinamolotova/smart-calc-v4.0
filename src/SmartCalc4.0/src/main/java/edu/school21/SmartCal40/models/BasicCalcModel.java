@@ -21,7 +21,7 @@ import java.util.Queue;
 public class BasicCalcModel {
 
   static final int AROUND_VAR = 7;
-  static final int MAXIMUM_NUMBER_OF_POINTS  = 10;
+  static final int MAXIMUM_NUMBER_OF_POINTS = 100;
   private final Parser parser;
 
   @Getter
@@ -43,6 +43,8 @@ public class BasicCalcModel {
       return ErrorMessage.ERROR_ARGUMENTS.getName();
     }
 
+    xCoordinates.clear();
+    yCoordinates.clear();
     String response = ErrorMessage.SUCCESS.getName();
     final double calculateStep = (Math.abs(maxX) + Math.abs(minX)) / MAXIMUM_NUMBER_OF_POINTS;
     for (double i = minX; i < maxX; i += calculateStep) {

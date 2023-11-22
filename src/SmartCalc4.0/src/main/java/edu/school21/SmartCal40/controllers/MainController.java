@@ -4,6 +4,7 @@ import edu.school21.SmartCal40.entities.HistoryEntity;
 import edu.school21.SmartCal40.models.BasicCalcModel;
 import edu.school21.SmartCal40.services.HistoryService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @AllArgsConstructor
 public class MainController {
@@ -25,12 +27,13 @@ public class MainController {
 
     @GetMapping("/")
     public String getMainPage(final Model model) {
-        setBaseAttributeToModel("0", "",  service.loadHistory(), model);
+        setBaseAttributeToModel("0", "",  service.loadLastTenRecordsOfHistory(), model);
         return "index";
     }
 
     @GetMapping("/delete-history")
     public String deleteHistory() {
+
         service.deleteAll();
         return "redirect:/";
     }
@@ -39,14 +42,14 @@ public class MainController {
     @PostMapping("/")
     public String getResult(
             @RequestParam("expression") final String expression,
-            @RequestParam("checkbox") final boolean isGraph,
+            @RequestParam(name = "checkbox", required = false) final boolean isGraph,
             @RequestParam("value") final String value,
             @RequestParam("min-x") final String minX,
             @RequestParam("max-x") final String maxX,
             final Model model
     ) {
         service.save(expression);
-        final Iterable<HistoryEntity> histories = service.loadHistory();
+        final List<HistoryEntity> histories = service.loadLastTenRecordsOfHistory();
         if (isGraph) {
             setBaseAttributeToModel(value, expression, histories, model);
             setResultForGraph(expression, minX, maxX, model);
@@ -75,7 +78,7 @@ public class MainController {
     private void setBaseAttributeToModel(
             final String xValue,
             final String result,
-            final Iterable<HistoryEntity> histories,
+            final List<HistoryEntity> histories,
             final Model model
     ) {
         model.addAttribute("value", xValue);

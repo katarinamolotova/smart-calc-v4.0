@@ -7,13 +7,13 @@ import lombok.Getter;
 
 @Getter
 public class CreditParametersDTO {
-    CreditType type;
-    double sum;
-    int amountOfMonth;
-    TermType termType;
-    double percent;
-    boolean isBroken = false;
-    ErrorMessage errorMessage = ErrorMessage.SUCCESS;
+    private CreditType type;
+    private double sum;
+    private int amountOfMonth;
+    private TermType termType;
+    private double percent;
+    private boolean isBroken;
+    private ErrorMessage errorMessage = ErrorMessage.SUCCESS;
 
     public CreditParametersDTO(
             final String type,
@@ -28,10 +28,10 @@ public class CreditParametersDTO {
             this.amountOfMonth = Integer.parseInt(amountOfMonth);
             this.termType = TermType.getTermType(termType);
             this.percent = Double.parseDouble(percent);
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             isBroken = true;
             errorMessage = ErrorMessage.ERROR_WRONG_ARGUMENT;
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
             isBroken = true;
             errorMessage = ErrorMessage.ERROR_SOMETHING_WRONG;
         }
@@ -39,7 +39,7 @@ public class CreditParametersDTO {
 
     public CreditParametersDTO() {
         this.type = CreditType.ANNUITY;
-        this.sum = 0;
+        this.sum = 1000000;
         this.amountOfMonth = 12;
         this.termType = TermType.MONTH;
         this.percent = 5;

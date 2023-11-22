@@ -10,19 +10,19 @@ import java.time.format.DateTimeFormatter;
 
 @Getter
 public class DepositParametersDTO {
-    double summa;
-    int amountOfMonth;
-    TermType termType = null;
-    double percent;
-    PeriodType capitalizationPeriod = null;
-    PeriodType periodPay = null;
-    int monthStart;
-    LocalDate start;
-    double additions;
-    double withdrawal;
-    double taxPercent;
-    boolean isBroken = false;
-    ErrorMessage errorMessage = ErrorMessage.SUCCESS;
+    private double summa;
+    private int amountOfMonth;
+    private TermType termType;
+    private double percent;
+    private PeriodType capitalizationPeriod;
+    private PeriodType periodPay;
+    private int monthStart;
+    private LocalDate start;
+    private double additions;
+    private double withdrawal;
+    private double taxPercent;
+    private boolean isBroken;
+    private ErrorMessage errorMessage = ErrorMessage.SUCCESS;
 
     public DepositParametersDTO(
             final String summa,
@@ -48,22 +48,22 @@ public class DepositParametersDTO {
             this.additions = Double.parseDouble(additions);
             this.withdrawal = Double.parseDouble(withdrawal);
             this.taxPercent = Double.parseDouble(taxPercent);
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
             this.errorMessage = ErrorMessage.ERROR_SOMETHING_WRONG;
             this.isBroken = true;
-        } catch (NumberFormatException e) {
+        } catch (final NumberFormatException e) {
             this.errorMessage = ErrorMessage.ERROR_WRONG_ARGUMENT;
             this.isBroken = true;
         }
     }
 
     public DepositParametersDTO() {
-        this.summa = 1000;
+        this.summa = 1000000;
         this.amountOfMonth = 12;
         this.termType = TermType.YEAR;
         this.percent = 5;
-        this.capitalizationPeriod = PeriodType.MONTHLY; // не работает
-        this.periodPay = PeriodType.MONTHLY; // не работает
+        this.capitalizationPeriod = PeriodType.MONTHLY;
+        this.periodPay = PeriodType.MONTHLY;
         this.start = LocalDate.now();
         this.taxPercent = 13;
         this.isBroken = false;

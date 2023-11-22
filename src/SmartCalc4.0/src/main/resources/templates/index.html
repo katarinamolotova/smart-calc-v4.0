@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/style.css" th:href="@{/css/style.css}">
     <link rel="stylesheet" type="text/css" media="all" href="../static/css/header.css" th:href="@{/css/header.css}">
 </head>
-<body th:attr="onload=|printGraph('${minX}', '${maxX}', '${valuesX}', '${valuesY}')|">
+<body th:attr="onload=|printGraph(${minX}, ${maxX}, ${valuesX}, ${valuesY})|">
 
 <header th:replace="~{fragments/header :: header}"></header>
 <br>
@@ -126,7 +126,7 @@
                  th:text="${history.data}">
             </div>
         </div>
-        <button class="history-btn" type="submit">Удалить историю</button>
+        <button class="history-btn" type="submit">Сбросить</button>
     </form>
 </div>
 

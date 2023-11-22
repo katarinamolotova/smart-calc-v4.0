@@ -3,8 +3,7 @@ let myChart = new Chart(ctx, null);
 
 function printGraph(minX, maxX, xvalues, yvalues) {
   const field = document.getElementById("expression");
-  myChart.clear();
-  let data = getData(xvalues, yvalues);
+  myChart.destroy();
   myChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -26,24 +25,7 @@ function printGraph(minX, maxX, xvalues, yvalues) {
         tooltip: {
           enabled: false
         }
-      },
-      scales: {
-        yAxes: [
-          {
-            ticks: {
-              beginAtZero: false,
-            },
-          },
-        ],
-      },
+      }
     },
   });
-}
-
-function getData(xvalues, yvalues) {
-  let arr = [];
-  for (let i = 0; i < xvalues.length; i++) {
-    arr.push({x:xvalues[i], y:yvalues[i]})
-  }
-  return arr;
 }
