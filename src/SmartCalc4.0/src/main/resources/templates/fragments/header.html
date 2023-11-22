@@ -6,20 +6,19 @@
 </head>
 <body>
 
-<!-- Заменить на enum ScreenType-->
 <header th:fragment="header">
     <div class="header">
         <div class="header-menu">
-            <div class="menu-item" th:classappend="${tab == 'main'} ? 'active'">
+            <div class="menu-item">
                 <a aria-current="page" href="/">Главная</a>
             </div>
-            <div class="menu-item" th:classappend="${tab == 'credit'} ? 'active'">
+            <div class="menu-item">
                 <a aria-current="page" href="/credit">Кредитный калькулятор</a>
             </div>
-            <div class="menu-item" th:classappend="${tab == 'deposit'} ? 'active'">
+            <div class="menu-item">
                 <a aria-current="page" href="/deposit">Депозитный калькулятор</a>
             </div>
-            <div class="menu-item" th:classappend="${tab == 'about'} ? 'active'">
+            <div class="menu-item">
                 <a aria-current="page" href="/about">Справка</a>
             </div>
         </div>

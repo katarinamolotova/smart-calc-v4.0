@@ -21,21 +21,30 @@ import java.util.Queue;
 public class BasicCalcModel {
 
   static final int AROUND_VAR = 7;
-  static final int MAXIMUM_NUMBER_OF_POINTS  = 10000;
-  final Parser parser;
+  static final int MAXIMUM_NUMBER_OF_POINTS  = 10;
+  private final Parser parser;
 
   @Getter
   private ArrayList<Double> xCoordinates;
   @Getter
   private ArrayList<Double> yCoordinates;
 
-  public boolean calculateForDraw(
+  public String calculateForDraw(
           final String inputString,
-          final double maxX,
-          final double minX
+          final String minXAsString,
+          final String maxXAsString
   ) {
-    double calculateStep = (Math.abs(maxX) + Math.abs(minX)) / MAXIMUM_NUMBER_OF_POINTS;
+    final double minX;
+    final double maxX;
+    try {
+      minX = parseDouble(minXAsString);
+      maxX = parseDouble(maxXAsString);
+    } catch (final NumberFormatException e) {
+      return ErrorMessage.ERROR_ARGUMENTS.getName();
+    }
+
     String response = ErrorMessage.SUCCESS.getName();
+    final double calculateStep = (Math.abs(maxX) + Math.abs(minX)) / MAXIMUM_NUMBER_OF_POINTS;
     for (double i = minX; i < maxX; i += calculateStep) {
       xCoordinates.add(i);
       response = getResult(inputString, String.valueOf(i));
@@ -44,22 +53,26 @@ public class BasicCalcModel {
       }
       yCoordinates.add(Double.parseDouble(response));
     }
-    return response.equals(ErrorMessage.ERROR_ARGUMENTS.getName());
+    return response;
   }
 
   public String getResult(final String inputString, final String valueRaw) {
     try {
-      double value = Double.parseDouble(!valueRaw.isEmpty() ? valueRaw : "0");
+      final double value = parseDouble(valueRaw);
       Validator.validateData(inputString);
-      String result = DataCooker.DataCook(inputString, value);
-      Queue<Pair<String, Double>> pairs = parser.doParsing(result);
+      final String result = DataCooker.DataCook(inputString, value);
+      final Queue<Pair<String, Double>> pairs = parser.doParsing(result);
       return String.valueOf(round(Calculator.calculate(pairs)));
-    } catch (NumberFormatException e) {
+    } catch (final NumberFormatException e) {
       return ErrorMessage.ERROR_ARGUMENTS.getName();
     }
   }
 
-  private static double round(double value) {
+  private double parseDouble(final String number) {
+    return Double.parseDouble(!number.isEmpty() ? number : "0");
+  }
+
+  private static double round(final double value) {
       if (AROUND_VAR < 0) {
           throw new IllegalArgumentException();
       }
