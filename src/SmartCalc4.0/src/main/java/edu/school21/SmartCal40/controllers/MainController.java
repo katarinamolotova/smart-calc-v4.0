@@ -38,7 +38,6 @@ public class MainController {
         return "redirect:/";
     }
 
-    // TODO обработка ошибок
     @PostMapping("/")
     public String getResult(
             @RequestParam("expression") final String expression,
@@ -48,14 +47,23 @@ public class MainController {
             @RequestParam("max-x") final String maxX,
             final Model model
     ) {
+        log.info("Вычисление выражения {}", expression);
         service.save(expression);
-        final List<HistoryEntity> histories = service.loadLastTenRecordsOfHistory();
-        if (isGraph) {
-            setBaseAttributeToModel(value, expression, histories, model);
-            setResultForGraph(expression, minX, maxX, model);
-        } else {
-            final String result = calcModel.getResult(expression, value);
-            setBaseAttributeToModel(value, result, histories, model);
+        final List<String> histories = service.loadLastTenRecordsOfHistory();
+
+        try {
+            if (isGraph) {
+                setBaseAttributeToModel(value, expression, histories, model);
+                setResultForGraph(expression, minX, maxX, model);
+                log.info("Результатом является график, где min-x = {}, max-x = {}", minX, maxX);
+            } else {
+                final String result = calcModel.getResult(expression, value);
+                setBaseAttributeToModel(value, result, histories, model);
+                log.info("Результат вычислений {}", result);
+            }
+        } catch (final Exception e) {
+            setBaseAttributeToModel(value, e.getMessage(), histories, model);
+            log.warn("Ошибка во время вычисления: {}", e.getMessage());
         }
 
         model.addAttribute("isGraph", isGraph);
@@ -78,7 +86,7 @@ public class MainController {
     private void setBaseAttributeToModel(
             final String xValue,
             final String result,
-            final List<HistoryEntity> histories,
+            final List<String> histories,
             final Model model
     ) {
         model.addAttribute("value", xValue);

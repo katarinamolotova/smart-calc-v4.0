@@ -9,23 +9,17 @@ function printGraph(minX, maxX, xvalues, yvalues) {
     data: {
       labels: xvalues,
       datasets: [{
-        label: field.value,
+        label: '',
         data: yvalues,
         backgroundColor: 'rgba(4,170,109,0.16)',
         borderColor: 'rgb(4,170,109)',
         borderWidth: 1,
-      },
-      ],
+      }],
     },
     options: {
       legend: {
         display: false
-      },
-      plugins: {
-        tooltip: {
-          enabled: false
-        }
       }
-    },
+    }
   });
 }

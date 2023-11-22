@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -26,9 +27,11 @@ public record HistoryService(HistoryRepository repository) {
         repository.save(tmp);
     }
 
-    public List<HistoryEntity> loadLastTenRecordsOfHistory() {
+    public List<String> loadLastTenRecordsOfHistory() {
         return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .sorted(Comparator.comparing(HistoryEntity::getDateTime).reversed())
+                .map(HistoryEntity::getData)
+                .distinct()
                 .limit(10)
                 .collect(Collectors.toList());
     }

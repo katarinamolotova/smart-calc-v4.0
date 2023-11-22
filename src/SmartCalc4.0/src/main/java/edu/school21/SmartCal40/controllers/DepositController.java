@@ -2,15 +2,17 @@ package edu.school21.SmartCal40.controllers;
 
 import edu.school21.SmartCal40.dto.DepositParametersDTO;
 import edu.school21.SmartCal40.dto.DepositResultDTO;
-import edu.school21.SmartCal40.enums.ErrorMessage;
+import edu.school21.SmartCal40.enums.Status;
 import edu.school21.SmartCal40.models.DepositCalcModel;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Slf4j
 @Controller
 @AllArgsConstructor
 public class DepositController {
@@ -20,6 +22,7 @@ public class DepositController {
     public String getDepositPage(
             final Model model
     ) {
+        model.addAttribute("result", new DepositResultDTO(false, Status.SUCCESS));
         model.addAttribute("params", new DepositParametersDTO());
         return "deposit";
     }
@@ -67,12 +70,16 @@ public class DepositController {
                 taxPercent
         );
 
-        DepositResultDTO resultDTO = depositModel.getResult();
+        log.info("Расчет доходности вклада с параметрами: {}", depositModel.getStartParameters());
+
+        final DepositResultDTO resultDTO = depositModel.getResult();
         model.addAttribute("params", depositModel.getStartParameters());
-        if (resultDTO.getErrorMassage().equals(ErrorMessage.SUCCESS)) {
+        if (resultDTO.getErrorMassage() == Status.SUCCESS) {
             model.addAttribute("result", resultDTO);
+            log.info("Результат расчета доходности вклада: {}", resultDTO);
         } else {
             model.addAttribute("result", new DepositResultDTO(true, resultDTO.getErrorMassage()));
+            log.info("При расчета доходности вклада произошла ошибка: {}", resultDTO.getErrorMassage());
         }
         return "deposit";
     }

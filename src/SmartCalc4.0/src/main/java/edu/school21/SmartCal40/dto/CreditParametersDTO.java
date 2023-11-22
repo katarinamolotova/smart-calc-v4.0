@@ -1,7 +1,7 @@
 package edu.school21.SmartCal40.dto;
 
 import edu.school21.SmartCal40.enums.CreditType;
-import edu.school21.SmartCal40.enums.ErrorMessage;
+import edu.school21.SmartCal40.enums.Status;
 import edu.school21.SmartCal40.enums.TermType;
 import lombok.Getter;
 
@@ -13,7 +13,7 @@ public class CreditParametersDTO {
     private TermType termType;
     private double percent;
     private boolean isBroken;
-    private ErrorMessage errorMessage = ErrorMessage.SUCCESS;
+    private Status status = Status.SUCCESS;
 
     public CreditParametersDTO(
             final String type,
@@ -30,10 +30,10 @@ public class CreditParametersDTO {
             this.percent = Double.parseDouble(percent);
         } catch (final NumberFormatException e) {
             isBroken = true;
-            errorMessage = ErrorMessage.ERROR_WRONG_ARGUMENT;
+            status = Status.ERROR_WRONG_ARGUMENT;
         } catch (final NullPointerException e) {
             isBroken = true;
-            errorMessage = ErrorMessage.ERROR_SOMETHING_WRONG;
+            status = Status.ERROR_SOMETHING_WRONG;
         }
     }
 

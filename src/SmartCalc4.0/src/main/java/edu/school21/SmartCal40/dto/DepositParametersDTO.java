@@ -1,11 +1,10 @@
 package edu.school21.SmartCal40.dto;
-import edu.school21.SmartCal40.enums.ErrorMessage;
+import edu.school21.SmartCal40.enums.Status;
 import edu.school21.SmartCal40.enums.PeriodType;
 import edu.school21.SmartCal40.enums.TermType;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
 @Getter
@@ -22,7 +21,7 @@ public class DepositParametersDTO {
     private double withdrawal;
     private double taxPercent;
     private boolean isBroken;
-    private ErrorMessage errorMessage = ErrorMessage.SUCCESS;
+    private Status status = Status.SUCCESS;
 
     public DepositParametersDTO(
             final String summa,
@@ -49,10 +48,10 @@ public class DepositParametersDTO {
             this.withdrawal = Double.parseDouble(withdrawal);
             this.taxPercent = Double.parseDouble(taxPercent);
         } catch (final NullPointerException e) {
-            this.errorMessage = ErrorMessage.ERROR_SOMETHING_WRONG;
+            this.status = Status.ERROR_SOMETHING_WRONG;
             this.isBroken = true;
         } catch (final NumberFormatException e) {
-            this.errorMessage = ErrorMessage.ERROR_WRONG_ARGUMENT;
+            this.status = Status.ERROR_WRONG_ARGUMENT;
             this.isBroken = true;
         }
     }

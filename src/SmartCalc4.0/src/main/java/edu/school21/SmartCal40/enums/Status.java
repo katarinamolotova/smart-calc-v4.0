@@ -1,6 +1,6 @@
 package edu.school21.SmartCal40.enums;
 
-public enum ErrorMessage {
+public enum Status {
     SUCCESS("SUCCESS"),
     ERROR_ARGUMENTS("Error: Not enough arguments"),
     ERROR_DIVISION_ZERO("Error: Division by zero"),
@@ -11,7 +11,7 @@ public enum ErrorMessage {
 
     private final String name;
 
-    ErrorMessage(final String name) {
+    Status(final String name) {
         this.name = name;
     }
 

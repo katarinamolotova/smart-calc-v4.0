@@ -3,7 +3,7 @@ package edu.school21.SmartCal40.models;
 import edu.school21.SmartCal40.dto.CreditParametersDTO;
 import edu.school21.SmartCal40.dto.CreditResultDTO;
 import edu.school21.SmartCal40.enums.CreditType;
-import edu.school21.SmartCal40.enums.ErrorMessage;
+import edu.school21.SmartCal40.enums.Status;
 import edu.school21.SmartCal40.enums.TermType;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
@@ -21,7 +21,7 @@ public class CreditCalcModel {
   private Double totalPayment;
   private ArrayList<Double> everyMothPay;
   @Getter
-  private CreditParametersDTO startParameters = null;
+  private CreditParametersDTO startParameters;
 
   public void validateInputParameters(
           final String type,
@@ -39,19 +39,19 @@ public class CreditCalcModel {
     );
   }
 
-  public ErrorMessage calculate() {
+  public Status calculate() {
     overpay = 0.0;
     totalPayment = 0.0;
     everyMothPay = new ArrayList<>();
-    if(Objects.isNull(startParameters)) {
-      return ErrorMessage.ERROR_SOMETHING_WRONG;
+    if (Objects.isNull(startParameters)) {
+      return Status.ERROR_SOMETHING_WRONG;
     } else if (startParameters.isBroken()) {
-      return startParameters.getErrorMessage();
+      return startParameters.getStatus();
     } else {
       everyMothPay(startParameters);
       totalPayment();
       overpay(startParameters.getSum());
-      return startParameters.getErrorMessage();
+      return startParameters.getStatus();
     }
   }
 

@@ -1,6 +1,6 @@
 package edu.school21.SmartCal40.models;
 
-import edu.school21.SmartCal40.enums.ErrorMessage;
+import edu.school21.SmartCal40.enums.Status;
 import edu.school21.SmartCal40.models.helpers.Calculator;
 import edu.school21.SmartCal40.models.helpers.DataCooker;
 import edu.school21.SmartCal40.models.helpers.Parser;
@@ -40,17 +40,17 @@ public class BasicCalcModel {
       minX = parseDouble(minXAsString);
       maxX = parseDouble(maxXAsString);
     } catch (final NumberFormatException e) {
-      return ErrorMessage.ERROR_ARGUMENTS.getName();
+      return Status.ERROR_ARGUMENTS.getName();
     }
 
     xCoordinates.clear();
     yCoordinates.clear();
-    String response = ErrorMessage.SUCCESS.getName();
+    String response = Status.SUCCESS.getName();
     final double calculateStep = (Math.abs(maxX) + Math.abs(minX)) / MAXIMUM_NUMBER_OF_POINTS;
     for (double i = minX; i < maxX; i += calculateStep) {
-      xCoordinates.add(i);
+      xCoordinates.add(Math.round(i * 100.0) / 100.0);
       response = getResult(inputString, String.valueOf(i));
-      if(response.equals(ErrorMessage.ERROR_ARGUMENTS.getName())) {
+      if(response.equals(Status.ERROR_ARGUMENTS.getName())) {
         break;
       }
       yCoordinates.add(Double.parseDouble(response));
@@ -66,7 +66,7 @@ public class BasicCalcModel {
       final Queue<Pair<String, Double>> pairs = parser.doParsing(result);
       return String.valueOf(round(Calculator.calculate(pairs)));
     } catch (final NumberFormatException e) {
-      return ErrorMessage.ERROR_ARGUMENTS.getName();
+      return Status.ERROR_ARGUMENTS.getName();
     }
   }
 
@@ -83,7 +83,7 @@ public class BasicCalcModel {
       bd = bd.setScale(AROUND_VAR, RoundingMode.HALF_UP);
       return bd.doubleValue();
     } catch (final Exception e) {
-      throw new IllegalArgumentException(ErrorMessage.ERROR_SOMETHING_WRONG.getName());
+      throw new IllegalArgumentException(Status.ERROR_SOMETHING_WRONG.getName());
     }
   }
 }

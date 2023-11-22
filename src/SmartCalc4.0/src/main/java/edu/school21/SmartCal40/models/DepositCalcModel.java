@@ -2,7 +2,7 @@ package edu.school21.SmartCal40.models;
 
 import edu.school21.SmartCal40.dto.DepositParametersDTO;
 import edu.school21.SmartCal40.dto.DepositResultDTO;
-import edu.school21.SmartCal40.enums.ErrorMessage;
+import edu.school21.SmartCal40.enums.Status;
 import edu.school21.SmartCal40.enums.PeriodType;
 import edu.school21.SmartCal40.enums.TermType;
 import lombok.Getter;
@@ -57,7 +57,7 @@ public class DepositCalcModel {
     if(Objects.isNull(startParameters)) {
       return new DepositResultDTO(
               true,
-              ErrorMessage.ERROR_SOMETHING_WRONG
+              Status.ERROR_SOMETHING_WRONG
       );
 
     } else if(!startParameters.isBroken()) {
@@ -73,7 +73,7 @@ public class DepositCalcModel {
     }
     return new DepositResultDTO(
             true,
-            startParameters.getErrorMessage()
+            startParameters.getStatus()
     );
   }
 

@@ -1,6 +1,6 @@
 package edu.school21.SmartCal40.dto;
 
-import edu.school21.SmartCal40.enums.ErrorMessage;
+import edu.school21.SmartCal40.enums.Status;
 import lombok.Getter;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -12,9 +12,8 @@ public class CreditResultDTO {
     private double totalPayment;
     private String everyMonthPay;
     private boolean isBroken;
-    private ErrorMessage errorMassage = ErrorMessage.SUCCESS;
-
-
+    private Status errorMassage = Status.SUCCESS;
+    
     public CreditResultDTO(
             final double overPay,
             final double totalPayment,
@@ -25,7 +24,7 @@ public class CreditResultDTO {
         this.everyMonthPay = getEveryMonthPayAsString(everyMonthPay);
     }
 
-    public CreditResultDTO(final boolean error, final ErrorMessage errorMassage) {
+    public CreditResultDTO(final boolean error, final Status errorMassage) {
         this.isBroken = error;
         this.errorMassage = errorMassage;
     }

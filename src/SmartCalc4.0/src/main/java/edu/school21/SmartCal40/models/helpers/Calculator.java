@@ -3,7 +3,7 @@ package edu.school21.SmartCal40.models.helpers;
 import java.util.Optional;
 
 import edu.school21.SmartCal40.enums.BinaryOperationType;
-import edu.school21.SmartCal40.enums.ErrorMessage;
+import edu.school21.SmartCal40.enums.Status;
 import edu.school21.SmartCal40.enums.UnaryOperationType;
 import javafx.util.Pair;
 import java.util.Objects;
@@ -18,7 +18,7 @@ public class Calculator {
     while (!polishNotation.isEmpty()) {
       String operation = polishNotation.peek().getKey();
       Pair<String, Double> result = Optional.ofNullable(polishNotation.peek())
-          .orElseThrow(() -> new IllegalArgumentException(ErrorMessage.ERROR_ARGUMENTS.getName()));
+          .orElseThrow(() -> new IllegalArgumentException(Status.ERROR_ARGUMENTS.getName()));
       final double value = result.getValue();
       if (Objects.equals(operation, "num")) {
         intermediateResult.push(value);
@@ -89,26 +89,26 @@ public class Calculator {
 
   private static void checkZeroPow(final double degree, final double value) {
     if (degree < 0 && value == 0) {
-      throw new IllegalArgumentException(ErrorMessage.ERROR_UNDEFINE_RESULT.getName());
+      throw new IllegalArgumentException(Status.ERROR_UNDEFINE_RESULT.getName());
     }
   }
 
   private static double getValueFromStack(final Stack<Double> intermediateResult) {
     if (intermediateResult.isEmpty()) {
-      throw new IllegalArgumentException(ErrorMessage.ERROR_ARGUMENTS.getName());
+      throw new IllegalArgumentException(Status.ERROR_ARGUMENTS.getName());
     }
     return intermediateResult.pop();
   }
 
   private static void checkDivision(final double value) {
     if (value == 0) {
-      throw new IllegalArgumentException(ErrorMessage.ERROR_DIVISION_ZERO.getName());
+      throw new IllegalArgumentException(Status.ERROR_DIVISION_ZERO.getName());
     }
   }
 
   private static void checkSqrt(final double value) {
     if (value < 0) {
-      throw new IllegalArgumentException(ErrorMessage.ERROR_SQRT_WRONG_NUMBER.getName());
+      throw new IllegalArgumentException(Status.ERROR_SQRT_WRONG_NUMBER.getName());
     }
   }
 }
