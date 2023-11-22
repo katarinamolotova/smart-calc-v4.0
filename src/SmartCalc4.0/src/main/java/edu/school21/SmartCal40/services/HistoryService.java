@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.function.Predicate;
 
 @Service
 @AllArgsConstructor
@@ -19,8 +23,10 @@ public class HistoryService {
         repository.save(tmp);
     }
 
-    public Iterable<HistoryEntity> loadHistory() {
-        return repository.findAll();
+    public List<HistoryEntity> loadHistory() {
+        List<HistoryEntity> result = new ArrayList<>();
+        repository.findAll().forEach(result::add);
+        return result;
     }
 
     public void deleteAll() {
@@ -29,5 +35,16 @@ public class HistoryService {
 
     public static HistoryEntity getEmptyEntity() {
         return new HistoryEntity();
+    }
+}
+
+class HistoryComparator implements Comparator<HistoryEntity>, Predicate<HistoryEntity> {
+    public int compare(HistoryEntity a, HistoryEntity b){
+        return a.getData().compareTo(b.getData());
+    }
+
+    @Override
+    public boolean test(HistoryEntity historyEntity) {
+        return false;
     }
 }
