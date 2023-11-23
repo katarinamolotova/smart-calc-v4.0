@@ -3,6 +3,7 @@ package edu.school21.SmartCal40.dto;
 import edu.school21.SmartCal40.enums.Status;
 import lombok.Getter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -11,6 +12,7 @@ public class CreditResultDTO {
     private double overPay;
     private double totalPayment;
     private String everyMonthPay;
+    private List<Double> everyMonthPayAsList;
     private boolean isBroken;
     private Status errorMassage = Status.SUCCESS;
     
@@ -22,6 +24,7 @@ public class CreditResultDTO {
         this.overPay = overPay;
         this.totalPayment = totalPayment;
         this.everyMonthPay = getEveryMonthPayAsString(everyMonthPay);
+        this.everyMonthPayAsList = everyMonthPay;
     }
 
     public CreditResultDTO(final boolean error, final Status errorMassage) {
