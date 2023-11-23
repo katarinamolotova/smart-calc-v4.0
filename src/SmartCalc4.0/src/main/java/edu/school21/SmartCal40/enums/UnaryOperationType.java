@@ -1,5 +1,7 @@
 package edu.school21.SmartCal40.enums;
 
+import java.util.Arrays;
+
 public enum UnaryOperationType {
     SIN("sin"),
     COS("cos"),
@@ -11,7 +13,6 @@ public enum UnaryOperationType {
     ACOS("acos"),
     ASIN("asin"),
     TILDE("~"),
-//    MOD("mod"),
     PLUS("plus");
 
     private final String operation;
@@ -21,21 +22,16 @@ public enum UnaryOperationType {
     }
 
     public static boolean isUnaryOperation(final String operation) {
-        for (UnaryOperationType t : UnaryOperationType.values()) {
-            if (t.operation.equalsIgnoreCase(operation)) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(UnaryOperationType.values())
+                     .anyMatch(t -> t.operation.equalsIgnoreCase(operation));
     }
 
-    public static UnaryOperationType fromString(String text) {
-        for (UnaryOperationType b : UnaryOperationType.values()) {
-            if (b.operation.equalsIgnoreCase(text)) {
-                return b;
-            }
-        }
-        return null;
+    public static UnaryOperationType fromString(final String text) {
+        return Arrays
+                .stream(UnaryOperationType.values())
+                .filter(b -> b.operation.equalsIgnoreCase(text))
+                .findFirst()
+                .orElse(null);
     }
 
     public String getOperation() {

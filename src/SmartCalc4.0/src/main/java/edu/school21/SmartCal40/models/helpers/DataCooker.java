@@ -20,8 +20,8 @@ public class DataCooker {
     for (int i = 1; i < result.length(); i++) {
       if (result.charAt(i) == '(' && (Character.isDigit(result.charAt(i - 1))
           || result.charAt(i - 1) == ')')) {
-        String subBegin = result.substring(0, i);
-        String subEnd = result.substring(i);
+        final String subBegin = result.substring(0, i);
+        final String subEnd = result.substring(i);
         result = subBegin + '*' + subEnd;
       }
     }
@@ -30,12 +30,12 @@ public class DataCooker {
 
   private static String exponentialEntryReplacement(final String inputString) {
     String result = inputString;
-    Pattern pattern = Pattern.compile(REGEX);
-    Matcher matcher = pattern.matcher(inputString);
+    final Pattern pattern = Pattern.compile(REGEX);
+    final Matcher matcher = pattern.matcher(inputString);
 
     while (matcher.find()) {
-      String expValue = checkPlusAtBeginString(matcher.group(0));
-      String value = BigDecimal.valueOf(Double.parseDouble(expValue)).toPlainString();
+      final String expValue = checkPlusAtBeginString(matcher.group(0));
+      final String value = BigDecimal.valueOf(Double.parseDouble(expValue)).toPlainString();
       result = result.replace(expValue, value);
     }
     return result;

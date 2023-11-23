@@ -19,7 +19,7 @@ public class DepositCalcModel {
   private static final Double SCALE = 100.;
 
   @Getter
-  private DepositParametersDTO startParameters = null;
+  private DepositParametersDTO startParameters;
   private double result;
   private double resultPercent;
   private double intermediateSum;

@@ -8,7 +8,7 @@ public class DepositResultDTO {
     private double sumAtTheEnd;
     private double resultPercent;
     private double sumTax;
-    private boolean isBroken = false;
+    private boolean isBroken;
     private Status errorMassage = Status.SUCCESS;
 
     public DepositResultDTO(

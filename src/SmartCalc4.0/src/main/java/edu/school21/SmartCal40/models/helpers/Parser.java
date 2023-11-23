@@ -25,12 +25,12 @@ public class Parser {
     this.isUnary = true;
   }
 
-  public Queue<Pair<String, Double>> doParsing(String str) {
+  public Queue<Pair<String, Double>> doParsing(final String str) {
     polishNotation.clear();
     this.isUnary = true;
-    Stack<String> operations = new Stack<>();
+    final Stack<String> operations = new Stack<>();
     for (int i = 0; i < str.length(); i++) {
-      String strByPos = str.substring(i);
+      final String strByPos = str.substring(i);
       if (Character.isDigit(str.charAt(i))) {
         i = numbersProcessing(i, strByPos);
       } else if (str.charAt(i) == '-' && isUnary) {
@@ -47,22 +47,22 @@ public class Parser {
     return polishNotation;
   }
 
-  int numbersProcessing(int index, final String str) {
+  int numbersProcessing(final int index, final String str) {
     try {
-      Number number = NumberFormat.getNumberInstance().parse(str);
+      final Number number = NumberFormat.getNumberInstance().parse(str);
       this.polishNotation.add(new Pair<>("num", number.doubleValue()));
       isUnary = false;
-    } catch (ParseException e) {
+    } catch (final ParseException e) {
       throw new RuntimeException(Status.ERROR_SOMETHING_WRONG.getName());
     }
     return index + (shiftNumber(str) - 1);
   }
 
 
-  int operationsProcessing(Stack<String> operations, int index, String str) {
+  int operationsProcessing(final Stack<String> operations, final int index, final String str) {
     String op = getOperations(str);
     if (Objects.equals(op, " ")) {
-      char temp = str.charAt(0);
+      final char temp = str.charAt(0);
       op = Character.toString(temp);
     }
     if (Objects.equals(op, ")")) {
@@ -114,7 +114,7 @@ public class Parser {
     return result;
   }
 
-  int shiftNumber(String value) {
+  int shiftNumber(final String value) {
     boolean isDot = false;
     int result = 0;
     while (Character.isDigit(value.charAt(result)) ||
@@ -130,7 +130,7 @@ public class Parser {
     return result;
   }
 
-  void prioritization(Stack<String> operations, final String op) {
+  void prioritization(final Stack<String> operations, final String op) {
     while (!operations.empty() && priority(operations.peek()) >= priority(op)) {
       this.polishNotation.add(new Pair<>(operations.pop(), 0d));
     }
@@ -138,28 +138,28 @@ public class Parser {
 
   int priority(final String op) {
     int result = -1;
-    if (Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.ADDITION) ||
-        Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.SUBTRACTION) ||
-        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.TILDE) ||
-        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.PLUS)
+    if (BinaryOperationType.fromString(op) == BinaryOperationType.ADDITION ||
+        BinaryOperationType.fromString(op) == BinaryOperationType.SUBTRACTION ||
+        UnaryOperationType.fromString(op) == UnaryOperationType.TILDE ||
+        UnaryOperationType.fromString(op) == UnaryOperationType.PLUS
     ) {
       result = 1;
-    } else if (Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.MULTIPLICATION) ||
-               Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.DIVISION) ||
-               Objects.equals(UnaryOperationType.fromString(op), BinaryOperationType.REMAINDER_OF_DIVISION)
+    } else if (BinaryOperationType.fromString(op) == BinaryOperationType.MULTIPLICATION ||
+               BinaryOperationType.fromString(op) == BinaryOperationType.DIVISION ||
+               BinaryOperationType.fromString(op) == BinaryOperationType.REMAINDER_OF_DIVISION
     ) {
       result = 2;
-    } else if (Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.DEGREE)) {
+    } else if (BinaryOperationType.fromString(op) == BinaryOperationType.DEGREE) {
       result = 3;
-    } else if (Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.SIN) ||
-        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.COS) ||
-        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.TAN) ||
-        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.ATAN) ||
-        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.ASIN) ||
-        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.ACOS) ||
-        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.LOG) ||
-        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.LN) ||
-        Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.SQRT)
+    } else if (UnaryOperationType.fromString(op) == UnaryOperationType.SIN ||
+               UnaryOperationType.fromString(op) == UnaryOperationType.COS ||
+               UnaryOperationType.fromString(op) == UnaryOperationType.TAN ||
+               UnaryOperationType.fromString(op) == UnaryOperationType.ATAN ||
+               UnaryOperationType.fromString(op) == UnaryOperationType.ASIN ||
+               UnaryOperationType.fromString(op) == UnaryOperationType.ACOS ||
+               UnaryOperationType.fromString(op) == UnaryOperationType.LOG ||
+               UnaryOperationType.fromString(op) == UnaryOperationType.LN ||
+               UnaryOperationType.fromString(op) == UnaryOperationType.SQRT
     ) {
       result = 4;
     }
@@ -192,7 +192,7 @@ public class Parser {
     return op;
   }
 
-  void getValueInBrackets(Stack<String> operations) {
+  void getValueInBrackets(final Stack<String> operations) {
     while (!operations.empty() && !Objects.equals(operations.peek(), "(")) {
       this.polishNotation.add(new Pair<>(operations.pop(), 0d));
     }

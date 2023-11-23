@@ -19,8 +19,6 @@ class ApplicationDepositTests {
 	private static final String DEPOSIT_PERCENT = "5";
 	private static final String SUMMA = "1000000";
 	private static final String AMOUNT_OF_MONTH = "12";
-	private static final String START_MONTH = "10";
-	private static final String RESULT = "50000";
 	private static final String TERM_TYPE = TermType.MONTH.getName();
 	private static final String CAPITAL = PeriodType.NONE.getName();
 	private static final String PERIOD_PAY = PeriodType.ONCE.getName();
@@ -29,8 +27,6 @@ class ApplicationDepositTests {
 	private static final String WITHDRAWAL = "1000";
 	private static final String TAX_PERCENT = "13";
 	private DepositResultDTO resultDTO;
-
-
 
 	@Autowired
 	private DepositCalcModel depositCalcModel;

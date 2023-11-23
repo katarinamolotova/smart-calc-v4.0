@@ -10,15 +10,13 @@ import java.util.Objects;
 import java.util.Queue;
 import java.util.Stack;
 
-import static java.lang.Math.*;
-
 public class Calculator {
-  public static double calculate(Queue<Pair<String, Double>> polishNotation) {
-    Stack<Double> intermediateResult = new Stack<>();
+  public static double calculate(final Queue<Pair<String, Double>> polishNotation) {
+    final Stack<Double> intermediateResult = new Stack<>();
     while (!polishNotation.isEmpty()) {
-      String operation = polishNotation.peek().getKey();
-      Pair<String, Double> result = Optional.ofNullable(polishNotation.peek())
-          .orElseThrow(() -> new IllegalArgumentException(Status.ERROR_ARGUMENTS.getName()));
+      final String operation = polishNotation.peek().getKey();
+      final Pair<String, Double> result = Optional.ofNullable(polishNotation.peek())
+                                                  .orElseThrow(() -> new IllegalArgumentException(Status.ERROR_ARGUMENTS.getName()));
       final double value = result.getValue();
       if (Objects.equals(operation, "num")) {
         intermediateResult.push(value);
@@ -33,7 +31,7 @@ public class Calculator {
   }
 
   private static void executionBinaryOperation(
-          Stack<Double> intermediateResult,
+          final Stack<Double> intermediateResult,
           final String operation
   ) {
     double result = 0;
@@ -58,33 +56,34 @@ public class Calculator {
     intermediateResult.push(result);
   }
 
-  private static void executionUnaryOperation(Stack<Double> intermediateResult,
-      final String operation) {
+  private static void executionUnaryOperation(
+          final Stack<Double> intermediateResult,
+          final String operation) {
     double result = 0;
-    double value = getValueFromStack(intermediateResult);
+    final double value = getValueFromStack(intermediateResult);
     if (Objects.equals(operation, UnaryOperationType.TILDE.getOperation())) {
       result = -1 * value;
     } else if (Objects.equals(operation, UnaryOperationType.PLUS.getOperation())) {
       result = value;
     } else if (Objects.equals(operation, UnaryOperationType.SIN.getOperation())) {
-      result = sin(value);
+      result = Math.sin(value);
     } else if (Objects.equals(operation, UnaryOperationType.COS.getOperation())) {
-      result = cos(value);
+      result = Math.cos(value);
     } else if (Objects.equals(operation, UnaryOperationType.TAN.getOperation())) {
-      result = tan(value);
+      result = Math.tan(value);
     } else if (Objects.equals(operation, UnaryOperationType.SQRT.getOperation())) {
       checkSqrt(value);
-      result = sqrt(value);
+      result = Math.sqrt(value);
     } else if (Objects.equals(operation, UnaryOperationType.LN.getOperation())) {
-      result = log(value);
+      result = Math.log(value);
     } else if (Objects.equals(operation, UnaryOperationType.LOG.getOperation())) {
-      result = log10(value);
+      result = Math.log10(value);
     } else if (Objects.equals(operation, UnaryOperationType.ATAN.getOperation())) {
-      result = atan(value);
+      result = Math.atan(value);
     } else if (Objects.equals(operation, UnaryOperationType.ACOS.getOperation())) {
-      result = acos(value);
+      result = Math.acos(value);
     } else if (Objects.equals(operation, UnaryOperationType.ASIN.getOperation())) {
-      result = asin(value);
+      result = Math.asin(value);
     }
     intermediateResult.push(result);
   }

@@ -20,7 +20,7 @@ class ApplicationTests {
 
 	static final int AROUND_VAR = 7;
 
-	private static double round(double value) {
+	private static double round(final double value) {
 		if (AROUND_VAR < 0) {
 			throw new IllegalArgumentException();
 		}
