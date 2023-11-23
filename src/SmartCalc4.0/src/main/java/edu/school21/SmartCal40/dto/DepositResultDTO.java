@@ -2,8 +2,10 @@ package edu.school21.SmartCal40.dto;
 
 import edu.school21.SmartCal40.enums.Status;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class DepositResultDTO {
     private double sumAtTheEnd;
     private double resultPercent;

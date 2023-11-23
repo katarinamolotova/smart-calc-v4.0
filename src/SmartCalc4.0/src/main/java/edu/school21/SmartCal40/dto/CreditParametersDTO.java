@@ -4,8 +4,10 @@ import edu.school21.SmartCal40.enums.CreditType;
 import edu.school21.SmartCal40.enums.Status;
 import edu.school21.SmartCal40.enums.TermType;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public class CreditParametersDTO {
     private CreditType type;
     private double sum;
@@ -46,3 +48,4 @@ public class CreditParametersDTO {
         this.isBroken = false;
     }
 }
+

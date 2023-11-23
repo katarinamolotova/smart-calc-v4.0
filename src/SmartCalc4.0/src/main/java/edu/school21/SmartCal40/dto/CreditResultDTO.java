@@ -2,12 +2,15 @@ package edu.school21.SmartCal40.dto;
 
 import edu.school21.SmartCal40.enums.Status;
 import lombok.Getter;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Getter
+@ToString
 public class CreditResultDTO {
     private double overPay;
     private double totalPayment;

@@ -3,11 +3,13 @@ import edu.school21.SmartCal40.enums.Status;
 import edu.school21.SmartCal40.enums.PeriodType;
 import edu.school21.SmartCal40.enums.TermType;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @Getter
+@ToString
 public class DepositParametersDTO {
     private double summa;
     private int amountOfMonth;
