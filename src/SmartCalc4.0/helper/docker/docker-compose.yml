@@ -13,7 +13,6 @@ services:
       start_period: 10s
     volumes:
       - ./dist/database:/var/lib/postgresql/data/pgdata/
-      - ./dist/import:/app/import
     restart: unless-stopped
 
   service-flyway:
@@ -42,8 +41,6 @@ services:
       - "8000:8000"
     volumes:
       - ./dist/logs:/app/logs
-      - ./dist/import:/app/import
-      - ./dist/export:/app/export
     restart: unless-stopped
 
   service-nginx:
