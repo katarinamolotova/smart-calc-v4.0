@@ -11,7 +11,7 @@ public enum UnaryOperationType {
     ACOS("acos"),
     ASIN("asin"),
     TILDE("~"),
-    MOD("mod"),
+//    MOD("mod"),
     PLUS("plus");
 
     private final String operation;

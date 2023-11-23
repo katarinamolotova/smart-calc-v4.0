@@ -5,8 +5,6 @@ services:
     container_name: S21DataBase
     env_file:
       - "./config_db.env"
-#    ports:
-#      - "5432:5432"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U root -d history" ]
       interval: 10s
@@ -28,46 +26,46 @@ services:
     depends_on:
       service-db:
         condition: service_healthy
-#
-#  service-backend:
-#    image: backend_info
-#    container_name: S21BackEnd
-#    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    depends_on:
-#      service-flyway:
-#        condition: service_completed_successfully
-#    env_file:
-#      - "./config_backend.env"
-#    ports:
-#      - "8000:8000"
-#    volumes:
-#      - ./dist/logs:/app/logs
-#      - ./dist/import:/app/import
-#      - ./dist/export:/app/export
-#    restart: unless-stopped
-#
-#  service-nginx:
-#    image: nginx
-#    container_name: S21Nginx
-#    restart: always
-#    depends_on:
-#      service-backend:
-#        condition: service_started
-#    ports:
-#      - "80:80"
-#    volumes:
-#      - ./dist/nginx:/etc/nginx/conf.d
-#
-#  service-pgadmin:
-#    image: dpage/pgadmin4:7
-#    container_name: S21PGadmin
-#    environment:
-#      PGADMIN_DEFAULT_EMAIL: root@root.com
-#      PGADMIN_DEFAULT_PASSWORD: root
-#    ports:
-#      - "5050:80"
-#    volumes:
-#      - ./dist/pgadmin:/var/lib/pgadmin
-#    restart: always
+
+  service-backend:
+    image: backend_info
+    container_name: S21BackEnd
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      service-flyway:
+        condition: service_completed_successfully
+    env_file:
+      - "./config_backend.env"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./dist/logs:/app/logs
+      - ./dist/import:/app/import
+      - ./dist/export:/app/export
+    restart: unless-stopped
+
+  service-nginx:
+    image: nginx
+    container_name: S21Nginx
+    restart: always
+    depends_on:
+      service-backend:
+        condition: service_started
+    ports:
+      - "80:80"
+    volumes:
+      - ./dist/nginx:/etc/nginx/conf.d
+
+  service-pgadmin:
+    image: dpage/pgadmin4:7
+    container_name: S21PGadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: root@root.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+    volumes:
+      - ./dist/pgadmin:/var/lib/pgadmin
+    restart: always

@@ -27,6 +27,7 @@ public class Parser {
 
   public Queue<Pair<String, Double>> doParsing(String str) {
     polishNotation.clear();
+    this.isUnary = true;
     Stack<String> operations = new Stack<>();
     for (int i = 0; i < str.length(); i++) {
       String strByPos = str.substring(i);
@@ -95,7 +96,7 @@ public class Parser {
   int shiftOperation(final String op) {
     int result = 0;
     if (Objects.equals(op, UnaryOperationType.LN.getOperation()) ||
-        Objects.equals(op, UnaryOperationType.MOD.getOperation())) {
+        Objects.equals(op, BinaryOperationType.REMAINDER_OF_DIVISION.getOperation())) {
       result = 2;
     } else if (Objects.equals(op, UnaryOperationType.SIN.getOperation()) ||
                Objects.equals(op, UnaryOperationType.COS.getOperation()) ||
@@ -145,7 +146,7 @@ public class Parser {
       result = 1;
     } else if (Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.MULTIPLICATION) ||
                Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.DIVISION) ||
-               Objects.equals(UnaryOperationType.fromString(op), UnaryOperationType.MOD)
+               Objects.equals(UnaryOperationType.fromString(op), BinaryOperationType.REMAINDER_OF_DIVISION)
     ) {
       result = 2;
     } else if (Objects.equals(BinaryOperationType.fromString(op), BinaryOperationType.DEGREE)) {
@@ -186,7 +187,7 @@ public class Parser {
     } else if (str.indexOf("log(") == 0) {
       op = UnaryOperationType.LOG.getOperation();
     } else if (str.indexOf("mod") == 0) {
-      op = UnaryOperationType.MOD.getOperation();
+      op = BinaryOperationType.REMAINDER_OF_DIVISION.getOperation();
     }
     return op;
   }

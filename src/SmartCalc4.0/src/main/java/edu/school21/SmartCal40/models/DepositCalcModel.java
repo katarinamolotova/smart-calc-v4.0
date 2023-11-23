@@ -54,6 +54,7 @@ public class DepositCalcModel {
   }
 
   public DepositResultDTO getResult() {
+    cleanCache();
     if(Objects.isNull(startParameters)) {
       return new DepositResultDTO(
               true,
@@ -75,6 +76,11 @@ public class DepositCalcModel {
             true,
             startParameters.getStatus()
     );
+  }
+
+  private void cleanCache() {
+    result = 0;
+    tempPercent = 0;
   }
 
   private double resultPercent(final DepositParametersDTO dto) {

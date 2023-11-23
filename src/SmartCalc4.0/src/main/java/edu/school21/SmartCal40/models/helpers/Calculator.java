@@ -32,8 +32,10 @@ public class Calculator {
     return intermediateResult.pop();
   }
 
-  private static void executionBinaryOperation(Stack<Double> intermediateResult,
-      final String operation) {
+  private static void executionBinaryOperation(
+          Stack<Double> intermediateResult,
+          final String operation
+  ) {
     double result = 0;
     final double value1 = getValueFromStack(intermediateResult);
     final double value2 = getValueFromStack(intermediateResult);
